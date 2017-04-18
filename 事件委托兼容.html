@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<h3>事件委托是利用事件的冒泡原理来实现的，何为事件冒泡呢？就是事件从最深的节点开始，然后逐步向上传播事件，大大减少dom的操作，优化的性能可想而知。
+		适合用事件委托的事件：click，mousedown，mouseup，keydown，keyup，keypress。
+		值得注意的是，mouseover和mouseout虽然也有事件冒泡，但是处理它们的时候需要特别的注意，因为需要经常计算它们的位置，处理起来不太容易。
+		不适合的就有很多了，举个例子，mousemove，每次都要计算它的位置，非常不好把控，在不如说focus，blur之类的，本身就没用冒泡的特性，自然就不能用事件委托了。</h1>
+		<br />
+		<hr />
+		<br />
+		
+		<!--正常情况(li里没有子元素)-->
+		<ul id="ul1">
+			    <li>111</li>
+			    <li>222</li>
+			    <li>333</li>
+			    <li>444</li>
+		</ul>
+		<br />
+		<hr />
+		<br />
+		<!--要是每个li被点击的效果都不一样，那么用事件委托还有用吗？-->
+		<div id="box">
+	        <input type="button" id="add" value="添加" />
+	        <input type="button" id="remove" value="删除" />
+	        <input type="button" id="move" value="移动" />
+	        <input type="button" id="select" value="选择" />
+	    </div>
+		<br />
+		<hr />
+		<br />
+		<!--新增的节点也会有事件-->
+		<input type="button" name="" id="btn" value="添加" />
+	    <ul id="ul2">
+	        <li>111</li>
+	        <li>222</li>
+	        <li>333</li>
+	        <li>444</li>
+	    </ul>
+	    <br />
+		<hr />
+		<br />
+	    <!--如果li里面有子元素，那么e.target就是子元素了，而不是li了，需要判断点击的是不是li，这种情况你会怎么处理呢？-->
+	    <ul id="test">
+	        <li>
+	            <p>11111111111</p>
+	        </li>
+	        <li>
+	            <div>
+	                22222222
+	            </div>
+	        </li>
+	        <li>
+	            <span>3333333333</span>
+	        </li>
+	        <li>4444444</li>
+	    </ul>
+	    
+	</body>
+	<script type="text/javascript">
+		//正常情况(li里没有子元素)
+//		window.onload = function() {
+//			var oUl = document.getElementById("ul1");
+//			oUl.onclick = function(ev) {
+//				var ev = ev || window.event;
+//				var target = ev.target || ev.srcElement;
+//				if(target.nodeName.toLowerCase() == 'li') {
+//					console.log('li click~');
+//				}else{
+//					console.log(target.nodeName);
+//				}
+//			}
+//		}
+
+		//要是每个li被点击的效果都不一样，那么用事件委托还有用吗？
+//		window.onload = function(){
+//          var oBox = document.getElementById("box");
+//          oBox.onclick = function (ev) {
+//              var ev = ev || window.event;
+//              var target = ev.target || ev.srcElement;
+//              if(target.nodeName.toLocaleLowerCase() == 'input'){
+//                  switch(target.id){
+//                      case 'add' :
+//                          alert('添加');
+//                          break;
+//                      case 'remove' :
+//                          alert('删除');
+//                          break;
+//                      case 'move' :
+//                          alert('移动');
+//                          break;
+//                      case 'select' :
+//                          alert('选择');
+//                          break;
+//                  }
+//              }
+//          }
+//      }
+
+		//新增的节点也会有事件
+//		window.onload = function(){
+//          var oBtn = document.getElementById("btn");
+//          var oUl = document.getElementById("ul2");
+//          var aLi = oUl.getElementsByTagName('li');
+//          var num = 4;
+//          
+//          //事件委托，添加的子元素也有事件
+//          oUl.onmouseover = function(ev){
+//              var ev = ev || window.event;
+//              var target = ev.target || ev.srcElement;
+//              if(target.nodeName.toLowerCase() == 'li'){
+//                  target.style.background = "red";
+//              }
+//              
+//          };
+//          oUl.onmouseout = function(ev){
+//              var ev = ev || window.event;
+//              var target = ev.target || ev.srcElement;
+//              if(target.nodeName.toLowerCase() == 'li'){
+//                  target.style.background = "#fff";
+//              }
+//              
+//          };
+//          
+//          //添加新节点
+//          oBtn.onclick = function(){
+//              num++;
+//              var oLi = document.createElement('li');
+//              oLi.innerHTML = 111*num;
+//              oUl.appendChild(oLi);
+//          };
+//      }
+		
+		//如果li里面有子元素，那么e.target就是子元素了，而不是li了，需要判断点击的是不是li，这种情况你会怎么处理呢？
+		var oUl = document.getElementById('test');
+	    oUl.addEventListener('click',function(ev){
+	        var target = ev.target;
+	        while(target !== oUl ){
+	            if(target.tagName.toLowerCase() == 'li'){
+	                console.log('li click~');
+	                break;
+	            }
+	            target = target.parentNode;
+	        }
+	    })
+	    
+	</script>
+
+</html>

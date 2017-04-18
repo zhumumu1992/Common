@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+	<script type="text/javascript">
+		function Ab(){
+			this.id = 1;
+		}
+		Ab.prototype = {
+			jump:function(){
+				console.log('jump');
+			}
+		}
+//		var a = new Ab();
+//		a.jump()
+		
+		function Bb(){
+			this.name = 'zsl';
+			Ab.call(this);
+		}
+		Bb.prototype.move=function(){
+			console.log('move');
+		}
+		Bb.prototype = new Ab();
+		var c = new Bb();
+		
+		console.log(c.id,c.name);
+		c.move()
+	</script>
+</html>

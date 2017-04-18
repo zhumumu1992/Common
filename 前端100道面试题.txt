@@ -1,0 +1,1591 @@
+﻿【-------------------------------------------HTML、CSS部分-------------------------------------------】
+1、行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？
+	行内元素有：a b span img input select strong 
+	块级元素有：div ul ol li dl dt dd h1 h2 h3 h4…p  
+	空元素： <br> <hr> <img> <input> <link> <meta> 
+
+2、CSS的盒子模型？
+	盒模型结构：display
+		    box-sizing
+		    width(max-width min-width)   height(max-height min-height)
+		    padding
+		    border
+		    outline
+		    box-shadow  9个参数  x轴 y轴 blur值 颜色,inset x轴 y轴 blur值 颜色
+		    margin
+	IE8以下浏览器的盒模型中定义的元素的宽高不包括内边距和边框
+		    
+3、如何垂直居中一个元素?有几种方法。
+	（1） .div { 
+			width: 180px;
+			height: 180px;
+			position: absolute;/*换成fixed也可以，不过IE8不支持*/
+			top: 50%;
+			left: 50%;
+			margin: -90px 0 0 -90px;
+			background: deepskyblue;
+		} 
+	（2）.div { 
+			width: 180px;
+			height: 180px;
+			position: absolute;/*换成fixed也可以，不过IE8不支持*/
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			margin: auto;
+			background: deepskyblue;
+		}
+	（3）.div { 
+			width: 80px;/*不设宽高也没事*/
+			height: 80px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			-moz-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			background: deepskyblue;
+		}
+	（4）给父级加display: -webkit-box;
+			-webkit-box-align: center;
+			-webkit-box-pack: center;
+	（5）图片垂直居中：给父级和子集图片vertical-align: middle;
+		img { 
+			vertical-align: middle;
+		}
+	
+4、列举常用选择器。
+宿主：
+	主体
+		属性选择器[src="1.jpj"]{...}
+			[attr]，选择具有该属性的元素			例:[src]{....}
+			[attr = val],选择属性值完全相等的元素	例:[class="one"]{....}
+			[attr ~= val],选择属性包含单词的元素	例:[src~="name"]{....}
+			[attr |= val],选择起始值包含单词的元素	例:[src|="name"]{....}
+			[attr ^= val],选择以字符串开头的元素	例:[src^="on"]{....}
+			[attr $= val],选择以字符串结尾的元素	例:[src$="jpj"]{....}
+			[attr *= val],选择包含字符串的元素		例:[src*="on"]{....}
+		标签选择器p{...}
+		class选择器.one{...}
+		ID选择器#one{...}
+	衍生
+		子元素选择器
+			.one>p{...}	选中所有class为one的元素下的直接子元素，不包括孙子辈
+			.one p{...}	选中与class为one的元素的所有同级元素
+		同辈选择器
+			.one+p{...}	选中class为one的元素紧接着的下一个p元素
+			.one~p{...}	选中所有class为one的元素下的所有同级元素p
+寄生：
+	伪元素
+		:first-line,选择第一行 		例:p:first-line{...}
+		:first-letter,选择第一个字符	例:p:first-letter{...}
+		:after,向元素之前插入内容		例:div:after{...}
+		:before,向元素之后插入内容	例:div:before{...}
+	伪类
+		表单
+			:invalid,用于匹配输入值为非法的元素			例:input:invalid{...}
+			:valid,用于匹配输入值为合法的元素			例:input:valid{...}
+			:out-of-range,值在指定区间之外的input元素	例:input:out-of-range{...}
+			:in-range,匹配值在指定区间之内的input元素	例:input:in-range{...}
+			:enabled,选择每一个已启用的输入元素			例:input:enabled{...}
+			:disabled,选择每一个禁用的输入元素			例:input:disabled{...}
+			:focus,选择具有焦点的输入元素				例:input:focus{...}
+		链接
+			:link,链接默认						例:a:link{...}
+			:visited,访问过后的					例:a:visited{...}
+			:hover,鼠标悬停					例:a:link{...}
+			:active,鼠标点击					例:a:active{...}
+			:target,目标伪类，href属性和ID配合		例:p:target {...}
+			:empty,选择每个没有任何子级的p元素		例:p:empty{...}
+		集合
+			:nth-child(n)选择第n个元素				例:div p:nth-child(2){....}
+			:nth-child(2n)2n选择集合中的偶数			例:div p:nth-child(2n){....}
+			:nth-last-child(n),从后向前选择第n个元素	例:div p:nth-last-child(2){....}
+			:nth-child(2n+1)2n+1 选择集合众的奇数             例:div p:nth-child(2n+1){....}
+			:first-child,选择集合中的第一个元素  		例:div p:first-child{....}
+			:last-child,选择集合中的最后一个元素		例:div p:last-child{....}
+			:only-of-type,选择元素中仅有一个元素		例:p:only-of-type{.....}父级只有一个P元素
+	
+5、关于弹性盒
+	-webkit-box:
+		-webkit-box-orient	子元素应该被水平或垂直排列
+			vertical	垂直
+			horizontal 	水平
+		-webkit-box-flex/-moz-box-flex 	子元素是否可伸缩其尺寸
+		box-align		控制里面子集盒子上下纵向排列	center/top/bottom
+		box-pack		控制里面子集盒子左右横向排列	center/top/bottom
+		box-flex-group  以组为单位的流体系数
+	
+6、tranform常用属性？
+	偏移  translate(x,y)
+	缩放  scale(x,y)
+	旋转  rotate(deg)
+	倾斜  skew(Xdeg,Ydeg)
+	translateZ   一见到z 就给父级加transform-style:preserve-3d;
+	
+7、transition简写格式
+	transition: 过度属性  时长  运动曲线  延迟时间;
+
+8、animation简写格式
+	animation: 动画名称  时长  运动轨迹  延迟时间  循环播放的次数  是否轮流反向播放动画  动画结束之后保持什么状态
+
+9、描述position是相对哪些来定位的
+	relative 	生成相对定位的元素，相对于当前位置进行定位
+    absolute 	生成绝对定位的元素，相对于父元素进行定位
+	fixed 		生成绝对定位的元素，相对于浏览器窗口进行定位
+
+10、调整文字样式的有哪些属性
+	font-family(字符集)   		font-style(字体样式)   	font-size(字体大小)   	font-weight(字体粗细) 
+	letter-spacing(字母间距)		word-spacing(空格距离)   	line-height(行高)   	text-align(水平对齐)  
+	vertical-align(垂直对齐)		color（文本颜色）   			text-shadow（文字阴影）   text-decoration(修饰线)
+	text-transform(字母大小写)		text-overflow(文本溢出)：clip / ellipsis     
+	word-break(文本换行)   		text-indent(首行缩进)		white-space: nowrap; (文本溢出不换行)
+	overflow: hidden (文本超出隐藏)	text-overflow: ellipsis; (文本溢出用省略号显示) 
+
+11、简述BOM是什么，以及有哪些子对象。
+	window对象是BOM的顶层(核心)对象，所有对象都是通过它延伸出来的，也可以称为window的子对象.
+	由于window是顶层对象，因此调用它的子对象时可以不显示的指明window对象。
+	window对象：
+		innerheight/width  窗口文档显示区宽高
+		outerwidth/height 	返回窗口的外部宽度
+		scrollHeight/width	返回整个元素的宽高（包括带滚动条的隐蔽的地方）
+		scrollTop	/Left	返回或设置匹配元素的滚动条的上下/水平位置距离
+		screenTop / Left    页面距离显示屏的上/左边距
+		scrollTo(x,y) 	把内容滚动到指定的坐标
+		scrollBy() 	按照指定的x,y值来调整滚动条
+		alert() 		显示带有一段消息和一个确认按钮的警告框。
+		setInterval() 	周期性定时器		
+		clearInterval() 	清除周期性定时器
+		setTimeout() 	一次性定时器
+		blur()		失去焦点
+		focus()		获取焦点
+		moveTo(x,y)	(绝对，从整体而言) 窗口移动到指定的像素
+		moveBy(x,y)	(相对，从原先的位置而言)  窗口移动多少像素
+		resizeTo(x,y)	调整到指定大小，xy不能为负，x( 窗体宽度的像素数)     y(窗体高度的像素数)
+		resizeBy(x,y)	相对自身调整大小	x( 窗体宽度调整的像素数)     y(窗体高度调整的像素数)
+	location对象：
+		hash 返回从#以后的内容
+		host 返回主机名和端口号
+		hostname 返回主机名
+		href 返回完整的URL
+		pathname 返回路径
+		port 返回端口号
+		protocol 返回协议
+		search 返回？后面的
+	history对象：
+		length 返回历史列表中的url数量
+		back 加载前一个url
+		forward 加载下一个url
+		go 加载指定的url（1下一个/-1上一个）
+	screen对象：
+		availHeight:返回显示屏幕的高度  document.write("Available Height: " + screen.availHeight);
+		availWidth:返回显示屏幕的宽度  document.write("Available Width: " + screen.availWidth);
+		colorDepth:返回目标设备或缓冲器上的调色板的比特深度。document.write(screen.colorDepth);
+		height:返回屏幕区域的实际高度  document.write(screen.height);
+		width:返回屏幕区域的实际宽度  document.write(screen.width);	
+	navigator对象；
+		appName:返回浏览器的名称。 txt+= "<p>Browser Name: " + navigator.appName + "</p>";
+		appVersion:返回浏览器的平台和版本信息。  txt+= "<p>Browser Version: " + navigator.appVersion + "</p>";
+		platform:返回运行浏览器的操作系统平台。  txt+= "<p>Platform: " + navigator.platform + "</p>";
+		appCodeName:返回浏览器的代码名。  txt = "<p>Browser CodeName: " + navigator.appCodeName + "</p>";
+
+12、简述DOM是什么，以及操作。
+	DOM 是 W3C（万维网联盟） 的推荐标准,DOM 定义了访问诸如 XML 和 XHTML 文档的标准,是一个使程序和脚本有能力动态地访问和更新文档的内容、结构以及样式的平台和语言中立的接口。
+	Document：
+		选择：
+			id/class/tagname/name
+			queryselector(".tag")	选择符合他的规则的第一个
+			queryselectorAll(".tag")	选择符合他的规则的所有
+		操作：
+			document.addEventListener		添加事件绑定
+			document.removeEventListener	解除事件绑定
+			document.createElement() 		创建元素节点。  
+			document.createElement() 		创建元素节点
+			document.createTextNode() 		创建文本节点
+			document.createAttribute() 		创建一个属性节点 
+	Element：
+		选择：
+			element.style   		设置或返回元素的 style 属性
+			element.className   	设置或返回元素的class属性
+			element.title 		设置或返回元素的title属性 
+			element.id 		设置或者返回元素的 id
+			element.innerHTML 	设置或者返回元素的内容
+			element.firstChild 		返回的第一个子元素 
+			element.lastChild 		返回的最后一个子元素 
+			element.appendChild() 	为元素添加一个新的子元素 
+			element.insertBefore() 	现有的子元素之前插入一个新的子元素 
+			element.removeChild() 	删除一个子元素 		
+			element.replaceChild() 	替换一个子元素 
+			element.hasChildNodes() 	返回一个元素是否具有任何子元素 
+			element.cloneNode() 	克隆某个元素 		 
+		操作：
+			1.内容
+				innerHTML
+				text/value
+			2.样式
+				style
+				classList.
+					add（）		添加一个类
+					remove（）	移除一个类
+					toggle（）	切换类名
+				csstext（）
+			3.属性
+				getAttribute("属性")		获取
+				setAttribute（"属性","属性值"）  	设置
+		宽高：
+			element.clientWidth / Height 	在页面上返回内容的可视宽度/高度
+			element.offsetWidth / Height 	返回元素的宽度/高度
+			element.offsetTop / Left 	offsetLeft 获取元素定位父级的距离 top / left 如果它没有定位父级默认body
+			offsetParent	 	获取定位的父级元素
+			parentNode 	 	它仅仅是获取html结构的父级
+			element.compareDocumentPosition()  比较两个元素的文档位置
+	
+13、Chrome中文界面下默认会将小于 12px的文本强制按照 12px显示,如何解决？
+	可通过加入 CSS 属性 -webkit-text-size-adjust: none; 解决
+	或者在谷歌浏览器设置调最小字体大小。
+
+14、 超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了,如何解决？
+	改变CSS属性的排列顺序  L-V-H-A		a:link {} a:visited {} a:hover {} a:active {}
+
+15、页面重构怎么操作？
+	网站重构：在不改变外部行为的前提下，简化结构、添加可读性，而在网站前端保持一致的行为。也就是说是在不改变UI的情况下，对网站进行优化，在扩展的同时保持一致的UI。
+	对于传统的网站来说重构通常是：
+	表格(table)布局改为DIV+CSS
+	使网站前端兼容于现代浏览器(针对于不合规范的CSS、如对IE6有效的)
+	对于移动平台的优化
+	针对于SEO进行优化
+	深层次的网站重构应该考虑的方面
+	减少代码间的耦合
+	让代码保持弹性
+	严格按规范编写代码
+	设计可扩展的API
+	代替旧有的框架、语言(如VB)
+	增强用户体验
+	通常来说对于速度的优化也包含在重构中
+	压缩JS、CSS、image等前端资源(通常是由服务器来解决)
+	程序的性能优化(如数据读写)
+	采用CDN来加速资源加载
+	对于JS DOM的优化
+	HTTP服务器的文件缓存
+
+16、css定义的权重。
+	!important >  id > class > tag
+
+17、HTML5 中如何嵌入音频,视频？及其方法。
+	<audio src="music/1.mp3"></audio>
+	<video id="video" src="1.mp4"></video>
+	方法和属性：
+	   	音频没有宽高
+		方法：
+			load() 		重新加载
+			pause() 	暂停播放
+			play() 		开始播放
+		属性：
+			src 		路径来源
+			autoplay 	自动播放
+			loop 		循环播放
+			preload 	预加载
+			muted 		设置是否静音
+			volume 		设置音量。
+			duration 	视频总秒数
+			currentTime 视频已经播放的秒数
+			ended 		播放结束
+			paused 		暂停播放
+			buffered（length）返回已缓冲部分的 TimeRanges 对象
+		事件：
+			ended		播放完成事件
+			timeupdate	播放的时候执行的事件
+			
+18、说明音频视频中最少8个常用的JS属性和方法。
+	load() 		重新加载
+	pause() 		暂停播放
+	play() 		开始播放
+	src 		路径来源
+	autoplay 		自动播放
+	loop 		循环播放
+	preload 		预加载
+	volume 		设置音量。
+	duration 		视频总秒数
+	currentTime 	视频已经播放的秒数
+	buffered（length）返回已缓冲部分的 TimeRanges 对象
+	ended		播放完成事件
+	timeupdate	播放的时候执行的事件		
+
+19、HTML5 Canvas 元素有什么用？及其方法属性。
+	Canvas 元素用于在网页上绘制图形，该元素标签强大之处在于可以直接在 HTML 上进行图形操作
+	<canvas id="canvas1" width="300" height="100"></canvas>
+	svg是用dom操作   占用内存影响性能，canvas是js操作    不占用内存
+	第一步 需要告诉canvas 你要画的东西是 2d 还是3d的
+	var od = canvas.getContext("2d");
+	od.beginPath();		起始一条路径，或重置当前路径
+	od.closePath() 		创建从当前点回到起始点的路径
+	od.strokeStyle=''  	笔的颜色
+	od.lineWidth=''		笔的粗细
+	od.moveTo(x,y)		把路径移动到画布中的指定点
+	od.lineTo(x,y)		线条
+	od.fillStyle=''		填充颜色
+	od.fill() 			填充
+	od.stroke()  		画完了
+	save() 				保存当前环境的状态
+	restore() 			返回之前保存过的路径状态和属性
+	quadraticCurveTo(cpx,cpy,x,y)	创建二次贝塞尔曲线
+	bezierCurveTo(cp1x,cp1y,cp2x,cp2y,x,y)	创建三次贝塞尔曲线
+	rect(x,y,width.height)		矩形	包含四个值  x 轴 y轴 宽 高
+	arc    x 轴 y 轴 半径 开始  结束  顺逆/false->顺时针 true->逆时针
+	如果让 canvas 里的元素运动必须 清除一下 在画一次
+
+20、SVG方法及属性。
+	矩形	<rect class="two" height="100" width="150" x="15" y="20"></rect>
+	圆形	<circle class="two" cx="100" cy="100" r="99"></circle>
+	椭圆 	<ellipse class="two" cx="100" cy="100" rx="50" ry="99"></ellipse>
+	线 	<line class="two" x1="0" y1="0" x2="200" y2="55"></line>
+	折线 	<polyline class="two" points="0,0 50,20 46,33 150,200"></polyline>
+	多边形	<polygon class="two" points="0,0 50,20 46,33 150,200"></polygon>
+	path 路径(大写字母表示绝对定位，小写字母表示相对定位，相对定位是相对上一组的x和y的值) 
+	M 	移动到 	(x y)+
+	R 	曲线 	x1 y1 (x y)+
+	A 	椭圆弧 	(rx ry x-axis-rotation large-arc-flag sweep-flag x y)+
+	T 	光滑二次贝塞尔曲线到 	(x y)+
+	Q 	二次贝塞尔曲线到 	(x1 y1 x y)+
+	S 	光滑三次贝塞尔曲线到 	(x2 y2 x y)+
+	C 	三次贝塞尔曲线到 	(x1 y1 x2 y2 x y)+
+	V 	垂直线到 	y+
+	H 	水平线到 	x+
+	L 	画线到 	(x y)+
+	Z 	关闭路径 	(none)
+	stroke	边框颜色
+	stroke-width	边框粗细
+	fill	填充颜色
+	height	高
+	width	宽
+	
+21、input表单有哪些类型？
+	按钮		button
+	重置按钮	reset
+	提交按钮	submit
+	图片提交	image
+	颜色		color
+	时间（时 : 分）	time
+	本地（年-月-日 时：分）	datetime-local
+	日期(年-月-日)	date
+	月（年-月）	month
+	星期(年 第几周)	week
+	日期(输入)	datetime
+	多选框	checkbox
+	单选框	radio
+	文件		file
+	隐藏域	hidden
+	密码		password
+	数字		number
+	滑动条	range
+	输入框	text
+	搜索框	search
+	邮件		email
+	电话		tel
+	网址Url	url
+	下拉列表	list
+	
+22、最少列举10个新增的表单类型
+	颜色		color
+	时间（时 : 分）	time
+	本地（年-月-日 时：分）	datetime-local
+	日期(年-月-日)	date
+	日期(输入)	datetime
+	邮件		email
+	月（年-月）	month
+	星期(年 第几周)	week
+	数字		number
+	搜索框	search
+	滑动条	range
+	电话		tel
+	网址Url	url	
+
+23、什么是HTML5应用程序缓存？
+	HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
+	应用程序缓存为应用带来三个优势：
+　　		离线浏览 - 用户可在应用离线时使用它们
+　　		速度 - 已缓存资源加载得更快
+　　		减少服务器负载 - 浏览器将只从服务器下载更新过或更改过的资源。
+
+24、怎么使用cookie？
+	cookie的值分为三个部分：
+		第一部分为要设置的字符串	user=angel&pass = 123;
+		第二部分为cookie到期时间, 过期时间仅支持格林威治时间格式，所以使用前必须通过toGMTString()方法转换时间格式			
+			var d = new Date();
+			d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
+			var expires = "expires=" + d.toGMTString();
+		第三部分为cookie的路径	path=/;
+			之间用";"分隔
+			document.cookie = "user=angel&pass = 123;" + expires + path=/;
+			当超过过期时间，cookie将被删除。
+
+25、web存储方法及属性。
+	不能跨浏览器，chrome存的 只能在chrome上拿到
+	localStorage	数据将一直存放在缓存中，直到用户清理缓存   所有窗口共享数据
+	sessionStorage 	页面关闭时，销毁存储的数据  单窗口数据
+	clear() 清除全部
+	setItem(attr,value); 存储
+	getItem(attr);  获取
+	所有数据都只能被当作字符串存储，不论之前存储的是什么格式，都会被转换为字符串
+	var a = {a1: 123, a2: 345, a3: 456}
+	a = JSON.stringify(a); 	JSON对象提供的stringify将其他数据类型转化成字符串 
+	var tex4 = JSON.parse(localStorage.d); 	将字符串重新转换为对象 
+	console.log(tex4.a2)
+
+26、cookie与web存储的区别，以及这两个对象的优点和缺点。
+	区别：cookie是存储在浏览器端，并且随浏览器的请求一起发送到服务器端的，它有一定的过期时间，到了过期时间自动会消失。
+	sessionStorage和localeStorage也是存储在客户端的，同属于webStorage，比cookie的存储容量大，有8m，cookie只有4kb。
+	localeStorage是持久化的存储在客户端，如果用户不手动清除的话，不会自动消失，会一直存在，
+	sessionStorage也是存储在客户端，但是它的存活时间是在一个回话期间，只要浏览器的回话关闭了就会自动消失。
+	cookie优点： 
+		1)、极高的扩展性和可用性
+		2)、不需要任何服务器资源。 Cookie保存在客户端，如果不是重要的东西就放在cookie中.以减少服务器的负担。
+		3)、可配置到期规则。 控制 cookie 的生命期，使之不会永远有效。偷盗者很可能拿到一个过期的 cookie 。
+		4)、简单性。 基于文本的轻量结构。
+		5)、通过良好的编程，控制保存在 cookie 中的 session 对象的大小。
+		6)、通过加密和安全传输技术（ SSL ），减少 cookie 被破解的可能性。
+		7)、只在 cookie 中存放不敏感数据，即使被盗也不会有重大损失。
+	缺点：
+		1)、使用简单文本存储数据，所以cookie的安全性很差。cookie保存在客户端浏览器，很容易被客户端盗取。
+		2)、Cookie的存储数据容量有限。上限为4kb，不适合大量存储。
+		3)、cookie存储的数量有限，多数浏览器上限为30或50个，ie6只支持每个域名存储20个cookie。
+		4)、如果浏览器的安全配置为最高，cookie将失效。
+		5)、cookie不适合大量数据的存储，因为cookie会由每个对服务器的请求来传递，从而造成cookie速度缓慢效率低下。
+	web存储优点：
+		localstorage是用于永久的本地存储，除非主动删除数据，否则数据是永远不会过期的。
+		sessionstorage是将数据保存在session对象中，用户关闭浏览器，数据就会删除。
+		1)、IE8下，每个独立的存储空间为10M，其他浏览器略有不同，但有比cookie要大很多。
+		2)、内容不会发送到服务器。
+		3)、更多丰富易用的接口，使得数据的操作更为简便。
+	缺点：
+		1)、浏览器会为每个域分配独立的存储空间。域A是无法访问到域B的存储空间。
+		2)、本地数据未加密而且永远不会过期，极易造成隐私泄露。
+		3)、不能跨浏览器。
+
+27、文件API怎么使用？ / 详细说明将一个文件进行转换需要那些步骤。
+	第一步：获取file对象
+		var obj1 = document.getElementById("file")
+		file = obj1.files[0]
+		//files是一个数组，FileReader()只能操作单一的文件对象，所以需要files[i]来使用
+	第二步:创建文件转换对象
+		var read = new FileReader()
+	第三部:使用文件转换对象的方法转换文件
+		方法和属性
+			方法
+				readAsBinaryString(flie)二进制
+				readAsDataURL(flie)		转换成url
+				readAsText(flie)		转换成文本
+			事件
+				onloadstart = function(){ this.result }
+				onloadend = function(){ this.result }
+				onerror = function(){ this.result }
+				onload = function(){ this.result } 
+				onabort  = function(){ this.result }
+				onprogress = function(){ this.result }
+			返回值,用在事件内部	this.result
+		read.readAsText(flie1)
+	第四部:加载处理
+		read.onload = function(e) {obj_2.innerHTML（这是变量） += this.result;}
+
+28、文本内容超过盒子宽度后以省略号显示的方法？
+	p {      
+	    width: 200px;
+	    white-space:nowrap;
+	    text-overflow:ellipsis;
+	    -o-text-overflow:ellipsis;
+	    overflow: hidden;
+    }   
+
+29、在HTML5中，哪个属性用于规定输入字段是必填的？
+	required="required"
+
+30、什么是Css Hack？
+	针对不同的浏览器去写不同的CSS，让它能够同时兼容不同的浏览器，能在不同的浏览器中也能得到我们想要的页面效果。
+	IE浏览器Hack一般又分为三种，条件Hack、属性级Hack、选择符Hack（详细参考CSS文档：css文档）。例如：
+	// 1、条件Hack
+   	<!--[if IE]>
+      	<style>
+            .test{color:red;}
+      	</style>
+   	<![endif]-->
+   	// 2、属性Hack
+    .test{
+    	color:#090\9; /* For IE8+ */
+    	*color:#f00;  /* For IE7 and earlier */
+    	_color:#ff0;  /* For IE6 and earlier */
+    }
+   	// 3、选择符Hack
+    * html .test{color:#090;}       /* For IE6 and earlier */
+    * + html .test{color:#ff0;}     /* For IE7 */
+
+31、说下行内元素和块级元素的区别？行内块元素的兼容性使用？（IE8 以下）
+	行内元素：会在水平方向排列，不能包含块级元素，设置width无效，height无效(可以设置line-height)，margin上下无效，padding上下无效。
+	块级元素：各占据一行，垂直方向排列。从新行开始结束接着一个断行。
+	兼容性：display:inline-block;*display:inline;*zoom:1;
+
+32、清除浮动有哪些方式？比较好的方式是哪一种？
+	（1）父级div定义height。
+	（2）结尾处加空div标签clear:both。
+	（3）父级div定义伪类:after和zoom。
+	（4）父级div定义overflow:hidden。
+	（5）父级div定义overflow:auto。
+	（6）父级div也浮动，需要定义宽度。
+	（7）父级div定义display:table。
+	（8）结尾处加br标签clear:both。
+	比较好的是第3种方式，好多网站都这么用。
+
+33、box-sizing常用的属性有哪些？分别有什么作用？
+	box-sizing: content-box|border-box|inherit;
+	content-box: 宽度和高度分别应用到元素的内容框。在宽度和高度之外绘制元素的内边距和边框(元素默认效果)。
+	border-box: 元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。通过从已设定的宽度和高度分别减去边框和内边距才能得到内容的宽度和高度。
+
+34、什么是语义化标签，为了能被搜索引擎更好的抓取收录，应该使用那些自定义标签。
+	html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；
+	在没有样式CCS情况下也以一种文档格式显示，并且是容易阅读的。
+	搜索引擎的爬虫依赖于标记来确定上下文和各个关键字的权重，利于 SEO。
+	使阅读源代码的人对网站更容易将网站分块，便于阅读维护理解。
+	优点：
+		1.  HTML结构清晰
+	    2.  代码可读性较好
+	    3.  无障碍阅读
+	    4.  搜索引擎可以根据标签的语言确定上下文和权重问题
+	    5.  移动设备能够更完美的展现网页（对css支持较弱的设备）
+	    6.  便于团队维护和开发
+	<header>  	定义一个文档头部部分 
+	<footer>  	定义一个文档底部 
+	<section>  	定义了文档的某个区域 
+	<article>  	定义一个文章内容 
+	<aside>  	定义其所处内容之外的内容。 
+	<dialog> 	定义一个对话框或者窗口 
+	<menu> 		定义菜单列表。 
+	<nav>		定义导航链接
+	<figure>  	标签用于对元素进行组合
+	<figcaption>	为 <figure> 元素定义标题
+	<details>  	定义了用户可见的或者隐藏的需求的补充细节，有个下拉箭头
+
+35、px和em的区别。
+	px和em都是长度单位，区别是，px的值是固定的，指定是多少就是多少，计算比较容易。em得值不是固定的，并且em会继承父级元素的字体大小。
+	浏览器的默认字体高都是16px。所以未经调整的浏览器都符合: 1em=16px。那么12px=0.75em, 10px=0.625em
+
+36、多个页面之间如何进行通信？
+	使用cookie，使用web worker，使用localeStorage和sessionStorage
+
+37、浏览器的渲染过程
+	首先获取html，然后构建dom树
+	其次根据css构建render树，render树中不包含定位和几何信息
+	最后构建布局数，布局是含有元素的定位和几何信息
+
+38、什么是重构、回流。
+	浏览器的重构指的是改变每个元素外观时所触发的浏览器行为，比如颜色，背景等样式发生了改变而进行的重新构造新外观的过程。
+	重构不会引发页面的重新布局，不一定伴随着回流，回流指的是浏览器为了重新渲染页面的需要而进行的重新计算元素的几何大小和位置的，
+	他的开销是非常大的，回流可以理解为渲染树需要重新进行计算，一般最好触发元素的重构，避免元素的回流；比如通过通过添加类来添加css样式，
+	而不是直接在DOM上设置，当需要操作某一块元素时候，最好使其脱离文档流，这样就不会引起回流了，
+	比如设置position：absolute或者fixed，或者display：none，等操作结束后在显示。
+
+39、CSS中哪些属性可以同父元素继承。
+	HTML元素可以从其父元素那里继承部分CSS属性，即使当前元素并没有定义该属性
+	color、font-size;
+
+40、做移动端项目时，meat标签需要写什么。
+	viewport			视窗(告诉浏览器正在使用设备)
+	width = device-width宽度等于设备的宽度
+	initial-scale = 1.0	初始缩放比例
+	user-scalable = 0         用户是否可以手动缩放
+	minimum-scale 	 	允许用户缩放到的最小比例
+	maximum-scale 		允许用户缩放到的最大比例
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+
+41、写出自己常用的做移动端项目时算rem单位的方法。
+	window.onload = function(){
+		document.documentElement.style.fontSize = document.documentElement.clientWidth/320*20+'px';
+		window.onresize = function(){
+			document.documentElement.style.fontSize = document.documentElement.clientWidth/320*20+'px';
+		}
+	}
+
+42、http&https区别。
+	在URL前加https://前缀表明是用SSL加密的。 你的电脑与服务器之间收发的信息传输将更加安全。
+	Web服务器启用SSL需要获得一个服务器证书并将该证书与要使用SSL的服务器绑定。
+	http和https使用的是完全不同的连接方式,用的端口也不一样,前者是80,后者是443。http的连接很简单,是无状态的,... 
+	HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议,要比http协议安全
+
+43、三层交互模式指的是？
+	结构层	HTML	页面结构 - 超文本标记语言 HyperText Markup language
+	表现层	CSS		修饰HTML - 层叠样式表 Cascading Style Sheets
+	行为层	js		JavaScript 添加功能
+
+44、严格模式与过渡模式的区别。
+	标签书写是否规范，显示结果会有差异（高级浏览器已经忽略这两种模式）
+	*不管浏览器怎么看，咱们都用最标准的写法。
+
+45、什么是渐进增强和优雅降级？
+	渐进增强 ：针对低版本浏览器进行构建页面，保证最基本的功能，然后再针对高级浏览器进行效果、交互等改进和追加功能达到更好的用户体验。
+	优雅降级 ：一开始就构建完整的功能，然后再针对低版本浏览器进行兼容。
+
+46、display:none和visibility:hidden的区别？
+	display:none  		隐藏对应的元素，在文档布局中不再给它分配空间，它各边的元素会合拢，就当他从来不存在。
+	visibility:hidden	隐藏对应的元素，但是在文档布局中仍保留原来的空间。
+
+47、iframe的优缺点？
+	优点：
+		解决加载缓慢的第三方内容如图标和广告等的加载问题
+		Security sandbox
+		并行加载脚本
+	缺点：
+		iframe会阻塞主页面的Onload事件
+		即时内容为空，加载也需要时间
+		没有语意
+
+48、请说出三种减少页面加载时间的方法
+	1. 优化图片 
+	2. 图像格式的选择（GIF：提供的颜色较少，可用在一些对颜色要求不高的地方） 
+	3. 优化CSS（压缩合并css，如 margin-top, margin-left...) 
+	4. 网址后加斜杠（如www.campr.com/目录，会判断这个目录是什么文件类型，或者是目录。） 
+	5. 标明高度和宽度（如果浏览器没有找到这两个参数，它需要一边下载图片一边计算大小，如果图片很多，浏览器需要不断地调整页面。这不但影响速度，也影响浏览体验。 
+	当浏览器知道了高度和宽度参数后，即使图片暂时无法显示，页面上也会腾出图片的空位，然后继续加载后面的内容。从而加载时间快了，浏览体验也更好了） 
+	6. 减少http请求（合并文件，合并图片）
+
+49、怎么重构页面？
+	编写 CSS
+	让页面结构更合理化，提升用户体验
+	实现良好的页面效果和提升性能
+
+
+【-------------------------------------------JS和其他-------------------------------------------】
+50、JavaScript的数据类型
+	基本数据类型：Number，String，Boolean，Undefined，Null
+	复杂数据类型：Object，Array，Function，RegExp，Date，Error
+	全局数据类型：Math
+	
+51、事件以及事件对象。
+	事件：
+		鼠标事件
+			onclick  		鼠标点击
+			onmouseover 	鼠标移入
+			onmouseout 	鼠标移出
+			onmousedown 	鼠标摁下
+			onmouseup	鼠标弹起
+			onblur		失去焦点
+			onfocus		得到焦点
+			onmousemove   	移动
+			oncontextmenu 	右键
+			dblclick		双击事件
+		鼠标滚轮事件
+			onmousewheel	兼容谷歌IE
+			DOMMouseScroll	兼容火狐
+			oEvent.wheelDelta	兼容谷歌 IE	下是负数，上是正数
+			detail 	    	兼容火狐
+		window事件
+			window.onload		页面加载完成后
+			window.onresize		当可视区发生改变的时候
+			window.onscroll		滚动的时候
+		键盘事件
+			keyCode
+				32  空格
+				40 下
+				39 右
+				38 上
+				37 左
+				57  9
+				48  0
+				8   退格
+				13  回车
+			ctrlKey		"CTRL" 键
+			shiftKey	"SHIFT" 键
+			altKey		"ALT" 键
+			onkeydown	按下
+			onkeyup		抬起
+		onChange	失去焦点的时候元素发生内容改变的情况才会触发
+		onblur		失去焦点时触发
+		onfocus		获取焦点时触发
+		oninput		只要内容发生改变就会触发
+		移动端事件
+			touchstart	触碰开始事件
+			touchmove  	触碰移动事件
+			touchend	触碰结束事件
+			touches		可以测试出你的触碰物体的length
+			targetTouches	绑定事件的那个结点上的触摸点的集合列表
+			e.touches[0].clientX/Y  第一次触碰物体的 clientX/Y
+	事件对象：
+		属性
+			标准属性
+				type	返回当前 Event 对象表示的事件的名称。	
+				target	返回触发此事件的元素（事件的目标节点）。
+				detail	与事件相关的细节信息
+			鼠标 / 键盘属性
+				button	返回当事件被触发时，哪个鼠标按钮被点击。
+				clientX	返回当事件被触发时，鼠标指针的水平坐标。 (不包括滚动条)
+				clientY	返回当事件被触发时，鼠标指针的垂直坐标。 (不包括滚动条)
+				relatedTarget	返回与事件的目标节点相关的节点。
+				screenX	返回当某个事件被触发时，鼠标指针的水平坐标。  (包括滚动条)
+				screenY	返回当某个事件被触发时，鼠标指针的垂直坐标。 (包括滚动条)
+		方法
+			stopPropagation() 		取消事件的进一步冒泡
+			stopImmediatePropagation	取消事件的进一步冒泡，同时阻止任何处理程序运行
+			preventDefault() 		通知浏览器不要执行与事件关联的默认动作。
+			initEvent() 		初始化新创建的 Event 对象的属性。
+			
+50、this对象的理解
+	this总是指向函数的直接调用者（而非间接调用者）；如果有new关键字，this指向new出来的那个对象；
+	在事件中，this指向触发这个事件的对象，特殊的是，IE中的attachEvent中的this总是指向全局对象Window；
+
+51、new操作符到底做了什么?
+	首先，new操作符为我们创建一个新的空对象，然后this变量指向该对象，
+	其次，空对象的原型执行函数的原型，
+	最后，改变构造函数内部的this的指向
+
+52、什么是闭包？闭包的作用？
+	闭包是就是函数中的函数，里面的函数可以访问外面函数的变量，外面的变量的是这个内部函数的一部分。
+	使用闭包可以访问函数中的变量。
+	可以使变量长期保存在内存中，生命周期比较长。
+	闭包不能滥用，否则会导致内存泄露，影响网页的性能。因为内部闭包函数可以访问外部函数的变量，所以外部函数的变量不能被释放，
+	如果闭包嵌套过多，会导致内存占用大，要合理使用闭包。闭包使用完了后，要立即释放资源，将引用变量指向null。
+	
+53、JavaScript的作用域和作用域链
+	JavaScript的作用域指的是变量的作用范围，内部作用域由函数的形参，实参，局部变量，函数构成，内部作用域和外部的作用域一层层的链接起来形成作用域链，
+	当在在函数内部要访问一个变量的时候，首先查找自己的内部作用域有没有这个变量，如果没有就到这个对象的原型对象中去查找，
+	还是没有的话，就到该作用域所在的作用域中找，直到到window所在的作用域，每个函数在声明的时候就默认有一个外部作用域的存在了，比如：
+		var t=4;
+		function foo(){
+		    var tem=12;
+		    funciton bar(){
+		    	var temo=34;
+		    	console.log(t + "" + tem + "" + temo);
+		    }
+		}
+	bar找t变量的过程就是，先到自己的内部作用域中找，发现没有找到，然后到bar所在的最近的外部变量中找，也就是foo的内部作用域，还是没有找到，再到window的作用域中找，结果找到了
+
+54、JavaScript的继承
+	function A(name){
+		this.name=name;
+	}
+	A.prototype.sayName = function(){
+	 	console.log(this.name); 
+ 	}
+	function B(age){ 
+		this.age=age; 
+	}
+	原型继承:
+		B.prototype = new A("mbj");  //被B的实例共享
+		var foo = new B(18);
+		foo.age;    //18,age是本身携带的属性
+		foo.name;   //mbj，等价于foo.__proto__.name
+		foo.sayName();		//mbj,等价于foo.__proto__.proto__.sayName()
+		foo.toString();		//"[object Object]",等价于foo.__proto__.__proto__.__proto__.toString();
+		这样B通过原型继承了A，在new B的时候，foo中有个隐藏的属性__proto__指向构造函数的prototype对象，在这里是A对象实例，
+		A对象里面也有一个隐藏的属性__proto__,指向A构造函数的prototype对象，
+		这个对象里面又有一个__proto__指向Object的prototype。这种方式的缺点,
+		第一个缺点是所有子类共享父类实例，如果某一个子类修改了父类，其他的子类在继承的时候，会造成意想不到的后果。
+		第二个缺点是在构造子类实例的时候，不能给父类传递参数。
+	构造函数继承:
+		function B(age,name){  
+			this.age=age;
+			A.call(this,name); 
+		}
+		var foo = new B(18,"wmy");
+		foo.name;     //wmy
+		foo.age;      //18
+		foo.sayName();   //undefined
+		采用这种方式继承是把A中的属性加到this上面，这样name相当于就是B的属性，sayName不在A的构造函数中，
+		所以访问不到sayName。这种方法的缺点是父类的prototype中的函数不能复用。
+	原型继承+构造函数继承：
+		function B(age,name){  
+			this.age=age;A.call(this,name); 
+		}
+		B.prototype = new A("mbj");
+		var foo = new B(18,"wmy");
+		foo.name;     //wmy
+		foo.age;      //18
+		foo.sayName();   //wmy
+		这样就可以成功访问sayName函数了，结合了上述两种方式的优点，但是这种方式也有缺点，那就是占用的空间更大了。
+
+55、JavaScript变量提升
+	var bar=1;
+	function test(){
+	  console.log(bar);     //undeifned
+	  var bar=2; 
+	  console.log(bar);  	//2
+	}
+	test();
+	为什么在test函数中会出现上述结果呢，这就是JavaScript的变量提升了，虽然变量bar的定义在后面，不过浏览器在解析的时候，会把变量的定义放到最前面，上面的test函数相当于
+	function test(){
+	  	var bar;
+	  	console.log(bar);   //undefined
+	  	bar=2; 
+	  	console.log(bar);   //2
+	}
+	再看
+	var foo=function(){ 
+	 	console.log(1); 
+	}
+	function foo(){  
+		console.log(2); 
+	}
+	foo();  //结果为1
+	同样的，函数的定义也会到提升到最前面，上面的代码相当于
+	function foo(){  
+		console.log(2); 
+	}
+	var foo;
+	foo=funciton(){ 
+		console.log(1); 
+	}
+	foo();   //1
+
+56、什么是内存泄漏,哪些操作会造成内存泄漏？
+	内存泄漏指的是浏览器不能正常回收内存的现象,内存泄漏指任何对象在您不再拥有或需要它之后仍然存在。
+	垃圾回收器定期扫描对象，并计算引用了每个对象的其他对象的数量。如果一个对象的引用数量为 0（没有其他对象引用过该对象），或对该对象的惟一引用是循环的，那么该对象的内存即可回收。
+	1. setTimeout 的第一个参数使用字符串而非函数的话，会引发内存泄漏。
+	2. 闭包
+	3. 控制台日志
+	4. 循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
+	
+57、浏览器的垃圾回收机制
+	垃圾收集器必须跟踪哪个变量有用哪个变量没用，对于不再有用的变量打上标记，以备将来收回其占用的内存，内存泄露和浏览器实现的垃圾回收机制息息相关，
+	而浏览器实现标识无用变量的策略主要有下两个方法：
+	第一，引用计数法
+		跟踪记录每个值被引用的次数。当声明一个变量并将引用类型的值赋给该变量时，则这个值的引用次数就是1。如果同一个值又被赋给另一个变量，则该值的引用次 数加1.
+		相反，如果包含对这个值引用的变量又取得另外一个值，则这个值的引用次数减1.当这个值的引用次数变成0时，则说明没有办法访问这个值了，因此就 可以将其占用的内存空间回收回来。
+		如： var a = {};	//对象{}的引用计数为1
+     	b = a;          //对象{}的引用计数为 1+1 
+     	a = null;       //对象{}的引用计数为2-1
+		所以这时对象{}不会被回收;
+		IE 6, 7 对DOM对象进行引用计数回收， 这样简单的垃圾回收机制，非常容易出现循环引用问题导致内存不能被回收， 进行导致内存泄露等问题，一般不用引用计数法。
+	第二，标记清除法
+	到2008年为止，IE,Firefox,Opera,Chrome和Safari的javascript实现使用的都是标记清除式的垃圾收集策略（或类似的策略），只不过垃圾收集的时间间隔互有不同。
+	标记清除的算法分为两个阶段，标记(mark)和清除(sweep). 第一阶段从引用根节点开始标记所有被引用的对象，第二阶段遍历整个堆，把未标记的对象清除。
+
+58、什么是同源策略。
+	同源策略是浏览器有一个很重要的概念。所谓同源是指，域名，协议，端口相同。不同源的客户端脚本(javascript、ActionScript)在没明确授权的情况下，
+	不能读写对方的资源。简单的来说，浏览器允许包含在页面A的脚本访问第二个页面B的数据资源，这一切是建立在A和B页面是同源的基础上。
+
+59、跨域的几种方式
+	jsonp（利用script标签的跨域能力）跨域、
+	websocket（html5的新特性，是一种新协议）跨域、
+	设置代理服务器（由服务器替我们向不同源的服务器请求数据）、
+	CORS（跨源资源共享，cross origin resource sharing）、
+	iframe跨域、
+	postMessage(包含iframe的页面向iframe传递消息)
+
+60、说明事件中什么是冒泡，什么是捕捉。
+	true是捕捉，false是冒泡。
+	事件捕捉：事件从最上一级标签开始往下查找，直到捕捉到事件目标(target)。
+	事件冒泡：事件从事件目标(target)开始，往上冒泡直到页面的最上一级标签。
+	假设一个元素div，它有一个下级元素p。
+	<div>
+	　　<p>元素</p>
+	</div>
+	这两个元素都绑定了click事件，如果用户点击了p，它在div和p上都触发了click事件，那这两个事件处理程序哪个先执行呢？事件顺序是什么？
+	当你使用事件捕捉时，父级元素先触发，子级元素后触发，即div先触发，p后触发。
+	当你使用事件冒泡时，子级元素先触发，父级元素后触发，即p先触发，div后触发。
+
+61、string对象常用的方法和属性，最少列举6个并写出例子。
+	charAt(index)	返回字符串第几位  按照索引值查找，如果没有就返回空字符串   不兼容IE7-    'a,b,c'.charAt(1)  //得 'b'	
+	concat(value1,value2 ... valueN)	字符串拼接	'a,b,c'.concat('d', 'e')  //得 'a,b,c,d,e'
+	indexOf(value , |startPosition )	查找  第一个参数要找的东西，第二个参数从第几位开始找，没找到会返回－1  
+		'a,b,c,d,e'.indexOf('b')  //得 1		'a,b,c,d,e'.indexOf('f')  //得 -1   
+	split(delimiter, |arrayLength)	     字符串转数组   'a,b,c,d,e'.split(',')   // =>   ["a", "b", "c", "d", "e"]
+	substr（起始 从起始开始几位）    字符串截取  如果只有一个参数，就是从开始到末尾   'abcde'.substr(0,3)   //得 'abc'      'abcde'.substr(3)   //得 'de'
+	slice(起始 终点)	字符串截取	如果只有一个参数 就是从开始到末尾，不会反截取，但是会截取负数从右边截取
+		'abcde'.slice(1)   //得 'bcde'	 'abcde'.slice(-3)   //得 'cde'   //返回从倒数第三个开始到末尾的所有字符
+
+62、array对象常用的方法和属性，最少列举6个并写出例子。
+	slice(startIndex,endIndex) 截取   		[1, 2, 3, 4, 5, 6].slice(0, 4);     //得  [1, 2, 3, 4]
+	unshift() ：从前面添加  		['a'，'b'，'c'].unshift('d');     //得  [ 'd'，'a'，'b'，'c']
+	unshift() ：从前面添加  		['a'，'b'，'c'].push('d');    //得  ['a'，'b'，'c'，'d']
+	shift() ：	删除前面		['a'，'b'，'c'，'d].shift();    //得  ['b'，'c'，'d']
+	pop() ：	删除后面			['a'，'b'，'c'，'d].pop();    //得  ['a'，'b'，'c']
+	join() ： 把数组的所有元素放入一个字符串		['a', 'b', 'c'].join(); //得  'a,b,c'     ['a', 'b', 'c'].join('-'); //得  'a-b-c'
+	indexOf(value,start) ： 查找，找到返回所在位置找不到返回-1		['a', 'b', 'c'].indexOf('a'); //得 0    ['a', 'b', 'c'].indexOf('a', 'd'); //得 -1	
+	reverse() ：反转数组元素的顺序  	['a', 'b', 'c', 'd', 'e'].reverse();   //得  ["e", "d", "c", "b", "a"]	
+
+63、如果需要遍历一个数组，最少列举4种方法。
+	forEach()    every()    filter()   map() 
+
+64、了解数据类型延伸对象及其方法。
+	string对象：
+		属性：
+			length 	返回字符串的长度
+		方法：
+			charAt(index)		返回字符串第几位  按照索引值查找，如果没有就返回空字符串   不兼容IE7-
+			charCodeAt(index) 	返回一个字符串中指定位置字符的Unicode编码
+			concat(value1,value2 ... valueN)		字符串拼接
+			indexOf(value , |startPosition )	 	查找  第一个参数要找的东西，第二个参数从第几位开始找，没找到会返回－1
+			lastIndexOf(value , |startPosition ) 	从后查找  第一个参数要找的东西，第二个参数从第几位开始找，没找到会返回－1
+			localeCompare(value) 	实例与参数进行比较，返回比较结果,1：实例比参数大, 0 ：实例与参数相等,-1 ：实例比参数小	
+			match(regexp) 	   		使用正则表达式进行匹配查找
+			replace(regexp, replaceStr) 	替换正则表达式匹配的子串，并返回替换后的字符串     'ab-cd'.replace(/-/,'') => abcd
+			search(regexp) 		返回查找正则表达式第一个匹配的位置
+			split(delimiter, |arrayLength)	分割字符串转数组
+			substr（起始 从起始开始几位） 字符串截取  如果只有一个参数，就是从开始到末尾
+			substring(起始 终点) 	字符串截取 如果只有一个参数，就是从开始到末尾
+			slice(起始 终点)		字符串截取 如果只有一个参数 就是从开始到末尾，不会反截取，但是会截取负数从右边截取	
+			toUpperCase() 		字符串转大写
+			toLowerCase() 		字符串转小写
+			trim() 	移除字符串开头和结尾处的空白字符并返回
+	number对象：
+		方法：
+			isNaN(value) 		判断参数是否为NaN
+			parseFloat(value) 	把参数转换为浮点数
+			parseInt(value) 	把参数转换为整数
+			toExponential(value) 将一个数字转为指数类型，参数表示小数点后的位数
+			toFixed(value) 	将一个数字转换为指定小数位数的字符串。不传入参数，就是没小数位。返回值为四舍五入
+			toString() 	使用指定的进制，将一个数字转换为字符串。不传入参数，默认为十进制
+	Math对象：
+		方法：
+			Math.random()		返回一个伪随机数,大于0，小于1.0
+			Math.abs(value) 	返回绝对值
+			Math.ceil(value)  	对一个数向上取整，并不是四舍五入
+			Math.floor(value) 	对一个数向下取整，并不是四舍五入
+			Math.round(value)	四舍五入后取整
+			Math.max(value1,value2...valueN) 返回参数中最大的值
+			Math.min(value1,value2...valueN) 返回参数中最小的值
+			Math.sqrt(value) 	返回参数的平方根	开平方
+			Math.pow(x,y) 		返回x的y次方	求次方
+			Math.sin(value) 	正弦函数
+			Math.cos(value) 	余弦函数
+			Math.tan(value) 	正切函数
+			Math.asin(value)	反正弦函数
+			Math.acos(value)	反余弦函数
+			Math.atan(value)	反正切函数
+	array对象：
+		属性：
+			length		表示数组内的元素长度。
+		方法：
+			shift()		删除前面
+			pop()		删除后面
+			push()		从后面添加
+			unshift()	从前面添加
+			concat()	拼接两个数组
+			indexOf(value,start)查找，找到返回所在位置找不到返回-1。
+			lastIndexOf	在数组中反向查找匹配元素。若不存在匹配的元素时，就返回-1。查找的时候使用"==="运算符，所以要区分1和'1' 
+			forEach() 	依次遍历元素，执行指定的函数；无返回值
+			every() 	检测数组所有元素是否都符合指定条件（通过函数提供）
+			filter()	创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素
+			map()		通过指定函数处理数组的每个元素，并返回处理后的数组
+			join()		把数组的所有元素放入一个字符串
+			toString()	数组转字符串，用一个逗号，隔开
+			reverse()	反转数组元素的顺序
+			slice(startIndex,endIndex)	截取/选取数组的的一部分，并返回一个新数组
+			sort(opt_orderFunc)	按一定的规则进行排序
+			splice(start,deleteCount,) 	从数组中删除(开始下标，个数)、插入(开始下标，0，内容...)、替换(开始下标，个数，内容...)元素
+	正则对象：
+		属性：
+			i 	忽略大小写
+			g 	全局匹配（查找到一个条件后，继续往后面查询）
+			m 	多行匹配。
+			[abc] 	查找方括号之间的任何字符。
+			[^abc] 	查找任何不在方括号之间的字符。
+			[0-9] 	查找任何从 0 至 9 的数字。
+			[a-z] 	查找任何从小写 a 到小写 z 的字符。
+			[A-Z] 	查找任何从大写 A 到大写 Z 的字符。
+			[A-z] 	查找任何从大写 A 到小写 z 的字符。	
+			(red|blue|green) 	查找任何指定的选项,用于匹配单词。
+			. 	查找单个字符，除了换行和行结束符。
+			\w 	英文字母、数字、下划线		[0-9a-zA-Z]
+			\W 	除了字母、数字、下划线以外的	[^0-9a-zA-Z]
+			\d 	匹配一个数字		[0-9]
+			\D 	除数字以外的		[^0-9]
+			\s 	匹配一个空白字符		[\f\n\r\t\v]
+			\S 	除了空白字符以外的	[\f\n\r\t\v]
+			\b 	匹配单词边界。
+			\B 	匹配非单词边界。
+			\0 	查找 NULL字符。
+			\n 	查找换行符。
+			\f 	查找换页符。
+			\r 	查找回车符。
+			\t 	查找制表符。
+			\v 	查找垂直制表符。
+			\xxx 	查找以八进制数 xxx 规定的字符。
+			\xdd 	查找以十六进制数 dd 规定的字符。
+			\uxxxx 	查找以十六进制数 xxxx 规定的 Unicode 字符。
+			n+ 	匹配任何包含至少一个 n 的字符串。
+			n* 	匹配任何包含零个或多个 n 的字符串。
+			n? 	匹配任何包含零个或一个 n 的字符串。
+			n{X} 	匹配包含 X 个 n 的序列的字符串。
+			n{X,Y} 	匹配包含 至少X个，最多Y个 n 的序列的字符串。
+			n{X,} 	匹配包含至少 X 个 n 的序列的字符串。
+			n$ 	匹配任何结尾为 n 的字符串。
+			^n 	匹配任何开头为 n 的字符串。
+			?=n 	匹配任何其后紧接指定字符串 n 的字符串。
+			?!n 	匹配任何其后没有紧接指定字符串 n 的字符串。
+		方法:
+			RegExp对象方法
+				compile(regexp,modifier)	用于在脚本执行过程中编译正则表达式，也可用于改变和重新编译正则表达式
+				exec(string) 	检索字符串中的正则表达式的匹配。该函数返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null
+				test(string)	检测一个字符串是否匹配某个模式，如果字符串中含有匹配的文本，则返回true，否则返回false
+			String对象方法
+				stringObject.search(regexp)	用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。如果没有找到任何匹配的子串，则返回 -1。		
+				stringObject.match(regexp)	在字符串内检索指定的值，或找到一个或多个正则表达式的匹配
+				stringObject.replace(regexp/substr,replacement)	    用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串	
+				stringObject.split(separator,howmany)	把一个字符串分割成字符串数组
+	Date对象:
+		实例方法:
+			get方法:
+				getFullYear() ：返回Date对象的年份值；4位年份。
+				getMonth() ：返回Date对象的月份值。从0开始，所以真实月份=返回值+1 。
+				getDate() ：返回Date对象的月份中的日期值；值的范围1~31 。
+				getHours() ：返回Date对象的小时值。
+				getMinutes() ：返回Date对象的分钟值。
+				getSeconds() ：返回Date对象的秒数值。
+				getMilliseconds() ：返回Date对象的毫秒值。
+				getDay() ：返回Date对象的一周中的星期值；0为星期天，1为星期一、2为星期二，依此类推
+				getTime() ：返回Date对象与'1970/01/01 00:00:00'之间的毫秒值(北京时间的时区为东8区，起点时间实际为：'1970/01/01 08:00:00')
+			set方法:
+				setFullYear(year, opt_month, opt_date) ：设置Date对象的年份值；4位年份。
+				setMonth(month, opt_date) ：设置Date对象的月份值。0表示1月，11表示12月。
+				setDate(date) ：设置Date对象的月份中的日期值；值的范围1~31 。
+				setHours(hour, opt_min, opt_sec, opt_msec) ：设置Date对象的小时值。
+				setMinutes(min, opt_sec, opt_msec) ：设置Date对象的分钟值。
+				setSeconds(sec, opt_msec) ：设置Date对象的秒数值。
+				setMilliseconds(msec) ：设置Date对象的毫秒值。
+			其他方法:
+				toString() ：将Date转换为一个'年月日 时分秒'字符串
+				toLocaleString() ：将Date转换为一个'年月日 时分秒'的本地格式字符串
+				toDateString() ：将Date转换为一个'年月日'字符串
+				toLocaleDateString() ：将Date转换为一个'年月日'的本地格式字符串
+				toTimeString() ：将Date转换为一个'时分秒'字符串
+				toLocaleTimeString() ：将Date转换为一个'时分秒'的本地格式字符串
+				valueOf() ：与getTime()一样， 返回Date对象与'1970/01/01 00:00:00'之间的毫秒值(北京时间的时区为东8区，起点时间实际为：'1970/01/01 08:00:00') 
+	object对象:
+		实例属性:
+			__proto__ ：设置或返回对象的原型对象(IE中不支持此属性)
+			prototype ：设置或返回对象类的原型对象
+			constructor ：表示创建此对象的构造函数
+		实例方法:
+			hasOwnProperty(propertyName) ：判断对象是否拥有一个指定名称的实例属性(非继承)
+			isPrototypeOf(obejct) ：判断某个原型是否出现在对象的原型链中
+			propertyIsEnumerable(propertyName) ：判断指定名称的属性是否为实例属性并且是可枚举的(可用for/in循环枚举)
+			toLocaleString() ：返回当前对象的一个本地化的字符串表示
+			toString() ：返回当前对象的一个字符串表示形式
+			valueOf() ：返回当前对象的原始值
+
+65、详细说明在页面内进行拖放和从页面外拖放有何区别，分别是怎么实现的。
+	页面内拖放是把一个标签放进另一个标签里，页面外拖放是把外部文件放到标签里。
+	页面内拖放：
+		$('.source').addEventListener('dragstart',function(e){
+		//被拖放元素的事件，存放一个变量，变量名为my，变量的值为当前元素的className
+			e.dataTransfer.setData('my',this.className);
+   	  	},false)
+      	$('.mubiao').addEventListener('dragover',function(e){
+			e.preventDefault(); //清除默认事件
+    	},false)
+	    $('.mubiao').addEventListener('drop',function(e){
+			//鼠标松开，拖放完成，清除默认动作，获取之前my变量，将变量值为my的元素放进容器中
+			var data = e.dataTransfer.getData('my');
+			this.appendChild(document.getElementsByClassName(data)[0]);
+	    },false)
+	页面外拖放:
+		$('body').addEventListener("dragleave", function(e) {
+			e.preventDefault(); //清除默认事件
+		})
+		$('body').addEventListener("dragenter", function(e) {
+			e.preventDefault();
+		})
+		$('body').addEventListener("dragover", function(e) {
+			e.preventDefault();
+		})
+		$('body').addEventListener("drop", function(e) {
+			e.preventDefault();
+			//获取当前被拖放的外部文件，返回的是一个数组，这个数组中存放着所有被拖放的元素
+			var fileList = e.dataTransfer.files[0];
+			//获取被拖放的外部元素的url
+			var src = window.webkitURL.createObjectURL(fileList) || window.URL.createObjectURL(fileList);
+			//定义一个Img标签
+			var str = "<audio autoplay src='" + src + "'></audio>";
+			//将定义好的img标签添加到id名为two的里面
+			document.getElementsByid("mubiao1").innerHTML += str;
+		}, false);
+
+66、http状态码
+	http状态码是表示服务器对请求的响应状态，主要分为以下几个部分
+	100-199 用于指定客户端应相应的某些动作
+	200-299 用于表示请求成功
+	300-399 用于已经移动的文件并且常被包含在定位头信息中指定新的地址信息
+	400-499 用于指出客户端的错误
+	400：语义有误，当前请求无法被服务器理解
+	401：当前请求需要用户验证
+	403：服务器已经理解请求，但是拒绝执行它
+	500-599 用于支持服务器错误
+	503：服务不可用
+
+67、ajax 的过程是怎样的
+	创建XMLHttpRequest对象,也就是创建一个异步调用对象
+	创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息
+	设置响应HTTP请求状态变化的函数
+	发送HTTP请求
+	获取异步调用返回的数据
+	使用JavaScript和DOM实现局部刷新
+
+68、GET和POST的区别，何时使用POST？
+	GET：一般用于信息获取，使用URL传递参数，对所发送信息的数量也有限制，一般在2000个字符
+	POST：一般用于修改服务器上的资源，对所发送的信息没有限制
+	GET方式需要使用 Request.QueryString 来取得变量的值。POST方式通过 Request.Form 来获取变量的值。
+	也就是说 Get 是通过地址栏来传值，而 Post 是通过提交表单来传值。
+	在以下情况中，请使用 POST 请求：
+		无法使用缓存文件（更新服务器上的文件或数据库）
+		向服务器发送大量数据（POST 没有数据量限制）
+		发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠
+
+69、Ajax是什么，Ajax的最大的特点，Ajax的缺点。
+	通过异步模式，提升了用户体验
+	优化了浏览器和服务器之间的传输，减少不必要的数据往返，减少了带宽占用
+	Ajax 在客户端运行，承担了一部分本来由服务器承担的工作，减少了大用户量下的服务器负载。
+	特点：
+		Ajax可以实现动态不刷新（局部刷新）
+		readyState 属性 状态 有5个可取值： 0 = 未初始化，1 = 启动， 2 = 发送，3 = 接收，4 = 完成
+	缺点：
+		Ajax 不支持浏览器 back 按钮
+		安全问题 Ajax 暴露了与服务器交互的细节
+		对搜索引擎的支持比较弱
+		破坏了程序的异常机制
+		不容易调试
+
+70、简述同步和异步的区别
+	同步是阻塞模式，异步是非阻塞模式。
+	同步就是指一个进程在执行某个请求的时候，若该请求需要一段时间才能返回信息，那么这个进程将会一直等待下去，直到收到返回信息才继续执行下去；
+	异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回时系统会通知进程进行处理，这样可以提高执行的效率。
+
+71、.call()和 .apply()的作用？
+	动态改变某个类的某个方法的运行环境,继承的时候用。
+	call和apply，假设要改变fn函数内部的this的指向，指向obj，那么可以fn.call(obj);或者fn.apply(obj);那么问题来了，
+	call和apply的区别是什么，其是call和apply的区别在于参数，他们两个的第一个参数都是一样的，表示调用该函数的对象，
+	apply的第二个参数是数组，是[arg1,arg2,arg3]这种形式，而call是arg1,arg2,arg3这样的形式。还有一个bind函数。
+
+72、异步加载和延迟加载
+	异步加载的方案： 动态插入script标签
+		通过 ajax去获取 js代码，然后通过 eval执行
+		script标签上添加 defer或者 async属性
+		创建并插入 iframe，让它异步执行js
+	延迟加载：有些 js代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的
+
+73、写出获取非行间样式封装方法。
+	function show(obj,sName){
+		return obj.currentStyle ? obj.currentStyle[sName] : getComputedStyle(obj,false)[sName];
+	}
+
+74、写出数组去重。
+	Array.prototype.unique1 = function () {
+      var n = []; //一个新的临时数组
+      for (var i = 0; i < this.length; i++) //遍历当前数组
+      {
+        //如果当前数组的第i已经保存进了临时数组，那么跳过，
+        //否则把当前项push到临时数组里面
+        if (n.indexOf(this[i]) == -1) n.push(this[i]);
+      }
+      return n;
+    }
+
+    Array.prototype.unique2 = function(){
+    	var n = {},r=[]; //n为hash表，r为临时数组
+    	for(var i = 0; i < this.length; i++) //遍历当前数组
+    	{
+    		if (!n[this[i]]) //如果hash表中没有当前项
+    		{
+    			n[this[i]] = true; //存入hash表
+    			r.push(this[i]); //把当前数组的当前项push到临时数组里面
+    		}
+    	}
+    	return r;
+    }
+
+    Array.prototype.unique3 = function(){
+    	var n = [this[0]]; //结果数组
+    	for(var i = 1; i < this.length; i++) //从第二项开始遍历
+    	{
+    		//如果当前数组的第i项在当前数组中第一次出现的位置不是i，
+    		//那么表示第i项是重复的，忽略掉。否则存入结果数组
+    		if (this.indexOf(this[i]) == i) n.push(this[i]);
+    	}
+    	return n;
+    }
+
+75、写出事件冒泡兼容。
+	function stopBubble(e){
+		if(e && e.stopPropagation){
+			e.stopPropagation	//如果提供了事件对象，则这是一个非IE浏览器
+		}else{
+			//否则就是IE的方法
+			window.event.cancelBubble = true;	//IE的方法
+		}
+	}
+
+76、写出默认事件。
+	function stopDefault(e){
+		if(e && e.preventDefault){
+			e.preventDefault();		//阻止默认浏览器动作(W3C)
+		}else{
+			window.event.returnValue = false;	//IE的方法
+		}
+		return false;
+	}
+
+77、事件委托是什么
+	事件委托是利用事件的冒泡原理来实现的，何为事件冒泡呢？就是事件从最深的节点开始，然后逐步向上传播事件，大大减少dom的操作，优化的性能可想而知。
+	适合用事件委托的事件：click，mousedown，mouseup，keydown，keyup，keypress。
+	值得注意的是，mouseover和mouseout虽然也有事件冒泡，但是处理它们的时候需要特别的注意，因为需要经常计算它们的位置，处理起来不太容易。
+	不适合的就有很多了，举个例子，mousemove，每次都要计算它的位置，非常不好把控，在不如说focus，blur之类的，本身就没用冒泡的特性，自然就不能用事件委托了。
+		比如：<ul id="test">
+			    <li>111</li>
+			    <li>222</li>
+			    <li>333</li>
+			    <li>444</li>
+			</ul>
+		实现：window.onload = function() {
+				var oUl = document.getElementById("test");
+				oUl.onclick = function(ev) {
+					var ev = ev || window.event;
+					var target = ev.target || ev.srcElement;
+					if(target.nodeName.toLowerCase() == 'li') {
+						console.log('li click~');
+					}
+				}
+			}
+	要是每个li被点击的效果都不一样，那么用事件委托还有用吗？
+		比如：<div id="box">
+		        <input type="button" id="add" value="添加" />
+		        <input type="button" id="remove" value="删除" />
+		        <input type="button" id="move" value="移动" />
+		        <input type="button" id="select" value="选择" />
+		    </div>
+		实现：window.onload = function(){
+	            var oBox = document.getElementById("box");
+	            oBox.onclick = function (ev) {
+	                var ev = ev || window.event;
+	                var target = ev.target || ev.srcElement;
+	                if(target.nodeName.toLocaleLowerCase() == 'input'){
+	                    switch(target.id){
+	                        case 'add' :
+	                            alert('添加');
+	                            break;
+	                        case 'remove' :
+	                            alert('删除');
+	                            break;
+	                        case 'move' :
+	                            alert('移动');
+	                            break;
+	                        case 'select' :
+	                            alert('选择');
+	                            break;
+	                    }
+	                }
+	            }
+	        }
+	新增的节点也会有事件
+	如果li里面有子元素，那么e.target就是子元素了，而不是li了，需要判断点击的是不是li，这种情况你会怎么处理呢？
+		比如：<ul id="test">
+		        <li>
+		            <p>11111111111</p>
+		        </li>
+		        <li>
+		            <div>
+		                22222222
+		            </div>
+		        </li>
+		        <li>
+		            <span>3333333333</span>
+		        </li>
+		        <li>4444444</li>
+		    </ul>
+		实现：var oUl = document.getElementById('test');
+		    oUl.addEventListener('click',function(ev){
+		        var target = ev.target;
+		        while(target !== oUl ){
+		            if(target.tagName.toLowerCase() == 'li'){
+		                console.log('li click~');
+		                break;
+		            }
+		            target = target.parentNode;
+		        }
+		    })
+	    
+78、AngularJS1中页面中用于数据绑定的占位符是什么？	{{ }}
+
+79、angularjs1中control间通信最好使用什么方式？	广播
+
+80、	程序的输出是什么？
+		var myObject = {
+		    foo: "bar",
+		    func: function() {
+		        var self = this;
+		        console.log(this.foo);  
+		        console.log(self.foo);  
+		        (function() {
+		            console.log(this.foo);  
+		            console.log(self.foo);  
+		        }());
+		    }
+		};
+		myObject.func();
+		答：	bar
+			bar
+			undefined
+			bar
+			第一个this.foo输出bar，因为当前this指向对象myObject。
+    		第二个self.foo输出bar，因为self是this的副本，同指向myObject对象。
+  			第三个this.foo输出undefined，因为这个IIFE(立即执行函数表达式)中的this指向window。
+  			第四个self.foo输出bar，因为这个匿名函数所处的上下文中没有self，所以通过作用域链向上查找，从包含它的父函数中找到了指向myObject对象的self。
+	
+81、下列代码
+	var person = {
+		fname:"John", lname:"Doe", age:25
+	};
+	var txt = "";
+	for (x in person){
+	  	txt = txt + person[x];
+	}
+	alert(txt);
+	输出为？
+	答：JohnDoe25
+	
+82、有以下代码片段：	var a =[];
+				a[0]=1, a[1]=2, a[2]=3, a[5]=4;
+				请问a.length的值是多少（ ）	
+	答：6
+	
+83、填空题：javascript 语言特性中，有很多方面和我们接触的其他编程语言不太一样，比如说，javascript语言实现继承机制的核心就是 [prototype] ，而不是Java语言那样的类式继承。
+	Javascript 解析引擎在读取一个Object的属性的值时，会沿着 [原型链]向上寻找，如果最终没有找到，则该属性值为 [undefined] ； 如果最终找到该属性的值，则返回结果。
+	与这个过程不同的是，当javascript解析引擎执行“给一个Object的某个属性赋值”的时候，如果当前Object存在该属性，则改写该属性的值，
+	如果当前的Object本身并不存在该属性，则赋值该属性的值 。
+	
+84、var a = [1,4,5,2,9]; 求a中最大值正确的是:
+	Math.max.apply(null,a)
+	
+85、在jquery中指定一个类，如果存在就执行删除功能，如果不存在就执行添加功能，下面哪一个是可以直接完成该功能的？
+	toggleClass(class)
+	
+86、下面这个JS程序的输出是什么：
+	function Foo() {
+	    var i = 0;
+	    return function() {
+	        console.log(i++);
+	    }
+	}
+	var f1 = Foo(),
+	    f2 = Foo();
+	f1();
+	f1();
+	f2();
+	答：0 1 0
+
+87、哪种控制元素隐藏显示的做法是最正确的
+	<div ng-show="val"></div>
+
+88、有如下代码：
+   	var name=’World!’;
+   	(function() {
+   		if(typeof name===’undefined’) {
+   			var name=’Jack’;
+   			console.log(‘Goodbye’+name);
+  		} else {
+   			console.log(‘Hello’+name);
+  		}
+  	})();
+  	请问执行后弹出的值是？
+  	答：Goodbye Jack
+  	分析：自执行的函数的this指的是window,就会在全局里面找这个属性的值；函数“自动”执行时，外层的name还没有被赋值。
+
+89、如何遍历下面的 my_data 对象？
+	var my_data={a:’Ape’, b:’Banana’, c:’Citronella’};
+	答：for(var key in my_data){}
+
+90、var x = new Boolean(false);
+	if (x) {
+	  alert('hi');
+	}
+	var y = Boolean(0);
+	if (y) {
+	  alert('hello'); 
+	}
+	的显示结果是？
+	答：hi	因为x为Boolen对象，在if语句里的判断为true，虽然x的值为false，但是作为对象，if会直接判断为true。y为Boolen值，在if里的判断就是false值。
+	
+91、下列代码
+	var obj={}
+	……..
+	obj.hasOwnProperty("val")
+	中hasOwnProperty的作用是？
+	答：判断obj对象是否具有val属性
+
+92、请阅读以下代码：
+	var obj = {};
+	obj.log = console.log;
+	obj.log.call(console,this);
+	该代码在浏览器中执行，输出的日志结果是什么？
+	答：window
+
+93、JavaScript定义var a="40",var b=7,则执行a%b会得到(5)
+
+94、以下为一段浏览器中可运行的Javascript 代码，
+	var obj = {"key":"1","value":"2"}; 
+	var newObj = obj; 
+	newObj.value += obj.key; 
+	alert(obj.value);
+	则运行该段Javascript代码的页面弹出框中显示的结果是：
+	答：'21'		因为键值都是字符串，拼接。
+	
+95、需要删除arr数组中的第i个元素，最好的做法是？
+	arr.splice(i-1,1)
+
+96、var a = [1,2,3,4,5];
+	a.splice(1,3,5,2,1);
+	console.log(a);
+	a的输出结果是？
+	答：[1,5,2,1,5]
+
+97、如何获取下面表单
+	<form name="a">
+		<select name="a" size="1" id=”obj”>
+			<option value="a">1</option>
+			<option value="b">2</option>
+			<option value="c">3</option>
+		</select>
+	</form>
+	域的选择部分的文本？
+	答：obj.options[obj.selectedIndex].text
+
+98、ajax的过程
+	创建XMLHttpRequest对象,也就是创建一个异步调用对象.
+	创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息.
+	设置响应HTTP请求状态变化的函数.
+	发送HTTP请求.
+	获取异步调用返回的数据.
+	使用JavaScript和DOM实现局部刷新.
+
+99、对前端界面工程师这个职位是怎么样理解的？它的前景会怎么样？
+	前端是最贴近用户的程序员，比后端、数据库、产品经理、运营、安全都近。
+	1. 实现界面交互
+	2. 提升用户体验
+	3. 有了Node.js，前端可以实现服务端的一些事情
+	前景：
+	1. 前端是最贴近用户的程序员，前端的能力就是能让产品从 90分进化到 100 分，甚至更好
+	2. 参与项目，快速高质量完成实现效果图，精确到1px；
+	3. 与团队成员，UI设计，产品经理的沟通；
+	4. 做好的页面结构，页面重构和用户体验；
+	5. 处理hack，兼容、写出优美的代码格式；
+	6. 针对服务器的优化、拥抱最新前端技术。
+
+100、Node.js的适用场景
+	高并发、聊天、实时消息推送
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
