@@ -1,0 +1,23 @@
+commit		提交
+remote		远程
+switch to 		切换到，转到
+advanced  	前进；增加；上涨
+pull		拉；拔；拖
+synchronize workspace	同步工作空间
+merge tool	合并工具
+merge		合并
+reset 		重置；清零
+rebase		重定基底；复位基底
+create patch	创建补丁
+apply patch	应用补丁
+ignore		忽视
+add to index	添加索引
+remove from index	删除索引
+Untrack		无路径
+show in repositories view	存储库视图中显示
+show in history	显示历史记录
+disconnect 	断开
+
+
+
+

@@ -1,0 +1,20 @@
+类型：
+	int - 数字 1-11位 （用户ID）- 主键
+	varchar - 最大65535个字符	
+
+
+表格操作：
+	插入数据：insert into 表名 ( 字段名1, 字段名2,...字段名n ) values( ‘内容1’,‘内容2’,...‘内容n’ );
+						插入多条数据：，隔开( ‘内容1’,‘内容2’,...‘内容n’ )，隔开( ‘内容1’,‘内容2’,...‘内容n’ )
+          	删除数据：delete from 表名 where 字段名="内容"
+            	修改数据：update 表名 set 字段名="内容",字段名="内容",字段名="内容" where 字段名id="内容"
+	查询数据：select * from 表名 where 字段名="内容"  /   like '%内容字符%'  相当于字符串查询indexof
+		 select * from 表名 where 字段名 like  '%内容字符%' or 字段名 like  '%内容字符%' or 字段名 like  '%内容字符%'（满足一条也行）
+ 	多条查询：select * from 表名 where 字段名(id) between 起始 and 终点     （包含起始和终点）
+		 select * from 表名 where 字段名>="内容" and 字段名<="内容"  两个条件都要满足  可查询多条数据 >  <
+		 select * from 表名 limit m,n   m是起始下标从0开始   n是查询几条数据
+	全局 / 模糊搜索: select * from 表名 where concat(全部字段名） like "%" 内容/? "%"
+	排序：	select * from 表名 order by 字段名 desc(倒序)  asc(正序)
+	空字段查询：select *from 表名 where 字段名 is null
+	按条件查询，结果显示符合条件的有多少条数据：select count(*) from 表名 where 字段名="内容" 
+	员工是否离职（用户信息尽量不删除，可标识为无效）：cat：在职1，离职2，
