@@ -1,0 +1,19 @@
+cd e：	选择某个/选择存储e盘
+cd ..	返回上一级文件夹
+mkdir	创建文件夹
+pwd	显示当前文件夹
+git init	创建一个.git文件
+git add txt.txt	把名称为txt的txt文件添加到版本库暂存区
+git add .		添加全部文件
+git commit -m '第一次提交'   -m后面是注释  确认提交
+cat txt.txt		查看版本库中提交的名称为txt的txt文件内容
+git status		查看当前文件的状态（modified：修改过的）
+git diff txt.txt	查看当前文件有没有修改
+git log	查看注释	
+git config --global user.name ''	设置用户名
+git config --global user.email ''	设置邮箱名
+git reset --hard HEAD^	回到上一个版本
+-g	全局安装
+
+
+

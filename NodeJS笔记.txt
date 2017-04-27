@@ -1,0 +1,26 @@
+node -v
+npm -v
+npm install express -g	安装express
+npm install express-generrator -g	安装express命令行
+express -V	4.13以下用此查版本
+express --version	4.13以上用此查版本
+express nodedemo		express创建项目
+cd nodedemo	进入项目
+npm install	安装依赖包 node_modules
+npm start	启动项目
+按两次ctrl+c	停止项目
+
+【 前后端分离是ajax实现访问后台数据，前后端耦合是后台链接模板而实现更新数据 】
+
+
+
+
+
+
+
+
+
+router.get/post('/login',function(request(请求参数),response(相应参数)){
+	var useName = request.body['username'],
+        	      pswd = request.body['password'];
+})

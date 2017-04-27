@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>$http做书籍排序</title>
+		<script src="angular.min.js"></script>
+		<style>
+			.list .item{border: 1px solid #000; margin: 10px; clear: both;}
+			.list .item .left{float: left; width: 20%; }
+			.list .item .right{float: right; width: 70%; height: 325px;}
+		</style>
+	</head>
+	<body ng-controller='ctrl'>
+		<div class="filter">
+			搜索<input type="text" />
+			<select ng-model="orderValue">
+				<option ng-selected="true">排序方法</option>
+				<option value="1">出版日期</option>
+				<option value="2">价格降序</option>
+				<option value="3">价格升序</option>
+			</select>
+			<select ng-model="expValue" ng-click="expFilterHandle()">
+				<option value="" ng-selected="true">配送方式</option>
+				<option value="{{$index+1}}" ng-repeat="item in exps">{{item}}</option>
+			</select>
+			<select>
+				<option value="">出版社</option>
+				<option value="" ng-repeat="item in presses">{{item}}</option>
+			</select>
+		</div>
+		<div class="list">
+			<div class="item" ng-repeat='item in booksFilterResult | orderBy:(orderValue == "1"?"date":orderValue == "2"?"-price":orderValue == "3"?"price":"")'>
+				<img class="left" src="{{item.pic}}">
+				<div class="right">
+					<p>书名:{{item.name}}</p>
+					<p>出版日期:{{item.date | date:'yyyy年MM月dd日hh:mm:ss:sss'}}</p>
+					<p>配送方式:{{item.exp}}</p>
+					<p>发货地:{{item.place}}</p>
+					<p>出版社:{{item.press}}</p>
+					<p>价格:{{item.price}}</p>
+					<p>销量:{{item.saled}}</p>
+					<p>简介:{{item.syn}}</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		angular.module('app',[]).controller('ctrl',['$scope','$http','$filter',function($scope,$http,$filter){
+			$scope.exps = [];	//配送方式
+			$scope.presses = [];//出版社
+			$scope.books = [];	//图书数据
+			//$scope.sort = "";	//排序方法
+			$scope.booksFilterResult = [];	//过滤器临时数据
+			
+			$http({
+				url:"http://127.0.0.1:8020/0906%E7%AC%AC%E4%BA%94%E5%A4%A9/shu.json",
+				method:'GET',
+			}).then(function(resp){
+				$scope.books = resp.data.data;
+				var ary = resp.data.data;
+				//console.log(ary)
+				for(var i=0; i<ary.length; i++){
+					var item = ary[i];	//单个图书信息数据
+					$scope.booksFilterResult.push(item);
+					//配送方式
+					if($scope.exps.indexOf(item.exp)<0){
+						$scope.exps.push(item.exp);
+					}
+					//出版社
+					if($scope.presses.indexOf(item.press)<0){
+						$scope.presses.push(item.press);
+					}
+					
+				}
+			},function(resp){
+				
+			})
+			
+			$scope.expFilterHandle = function(){
+				if($scope.expValue == '0'){
+					$scope.booksFilterResult = copyAry($scope.books);
+				}else{
+					$scope.booksFilterResult = $filter('filter')($scope.books,$scope.exps[parseInt($scope.expValue) - 1]);
+				}
+				
+			}
+			
+			//复制数组
+			function copyAry(copy_ary){
+				var ary = [];
+				console.log(copy_ary)
+				for(var i=0; i<copy_ary.length; i++){
+					ary.push(copy_ary[i]);
+				}
+				return ary;
+			}
+			
+			
+		}])
+	</script>
+</html>
+

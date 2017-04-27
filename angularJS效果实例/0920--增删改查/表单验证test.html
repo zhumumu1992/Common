@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.6.2.min.js"></script>
+		<script src="js/angular.js"></script>
+		<script src="js/angular-route.js"></script>
+		<script src="js/angular-messages.js"></script>
+		<style>
+			form.ng-invalid input{background: lightskyblue;} /*未通过验证*/
+			form.ng-pristine input{background: bisque;} /*未修改*/
+		</style>
+	</head>
+	<body ng-controller="main">
+		<form ng-submit="send(myForm.$valid)" name="myForm">
+			<!--<input type="email" placeholder="email" required="required" />
+			<input type="url" placeholder="url" />-->
+			<input type="number" ng-maxlength="11" ng-minlength="11"  name="inputTel" required="required" ng-model="w" />
+			<div ng-messages="myForm.inputTel.$error" ng-messages-multiple="">
+				<p ng-message="required">请填写电话</p>
+				<p ng-message="minlength">不能小于11</p>
+				<p ng-message="maxlength">不能大于11</p>
+			</div>
+			<input type="text" name="user_name" placeholder="请输入姓名" required="required" ng-minlength="2" ng-maxlength="8" ng-model="user_name" />
+			<div ng-messages="myForm.user_name.$error">
+				<p ng-message-exp="item.name" ng-repeat="item in valids" >{{item.tip}}</p>
+			</div>
+			<input type="text" name="user_job" placeholder="请输入职业" required="required" ng-minlength="3" ng-maxlength="10" ng-model="job" />
+			<div ng-messages="myForm.user_job.$error" >
+				<p ng-messages-include="template_error.html"></p>
+				<p ng-message="minlength">输入的内容太短</p>
+				<p ng-message="maxlength">输入的内容太长</p>
+			</div>
+			<input type="email" name="user_email" placeholder="请输入邮箱" required="required" ng-model="email" />
+			<div ng-messages="myForm.user_email.$error" >
+				<p ng-message="email">请输入正确的邮箱</p>
+			</div>
+			
+			<input type="submit"  />
+		</form>
+		<div ng-view=""></div>
+	</body>
+	<script type="text/ng-template" id="template_error.html"></script>
+	<script>
+		angular.module('app',['ngMessages']).controller('main',['$scope',function($scope){
+			$scope.send = function($valid){
+				alert($valid);
+			}
+			
+			$scope.valids = [
+				{
+					name:"required",
+					tip:"此项不能为空"
+				},
+				{
+					name:"minlength",
+					tip:"不能少于2位"
+				},
+				{
+					name:"maxlength",
+					tip:"不能大于8位"
+				}
+			]
+			
+			
+			
+		}])
+	</script>
+</html>

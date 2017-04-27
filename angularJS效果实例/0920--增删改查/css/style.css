@@ -1,0 +1,34 @@
+.liebiao{margin-top: 30px; margin: 0 auto;}
+.liebiao table{width: 500px; height: 300px; margin-left: 35%; margin-top: 20px;}
+.liebiao button{margin: 10px 0 0 50%;}
+.fhzy{text-decoration: none; display: block; width: auto; margin: 0 auto; text-align: center;}
+.info h1{text-align: center; margin-top: 20px;}
+.info .xinxi{width: 500px; float: left; margin-left: 15%;}
+.info p{text-align: left; width: 500px;}
+.info .jjimg{float: left;}
+
+.form{width: 450px; margin: 0 auto;}
+.form div{width: 450px; height: auto; float: left; margin-top: 10px;}
+.form label{float: left; width: 75px; margin-left: 10px; text-align: left;}
+.form input{float: left; width: auto; margin-left: 10px;}
+.form select{float: left; width: auto; margin-left: 10px;}
+.form textarea{float: left; width: 300px; height: 100px; margin-left: 10px;}
+.form div span{margin-left: 10px; color: #f69;}
+.form div a{text-decoration: none; float: left;  margin-left: 20%; margin-top: 10px;}
+
+.denglu{width: auto; margin: 0 auto;}
+.denglu h3{width: auto; text-align: center;}
+.denglu p{width: 250px; margin: 0 auto; margin-top: 10px;}
+.denglu button{width: 50px; display: block; margin: 10px auto;}
+
+.ani-for-repeat{transition: all 1s ease-out;}
+.ani-for-repeat.ng-leave{transform: translateX(0px); opacity: 1;}/*from*/
+.ani-for-repeat.ng-leave.ng-leave-active{transform: translateX(100px); opacity: 0;}/*to*/
+
+.ani-for-view{transition: all 1s ease-out; width: 90%;  margin: 0 auto;}
+.ani-for-view.ng-leave{transform: translateX(0px); opacity: 1;}/*from*/
+.ani-for-view.ng-leave.ng-leave-active{transform: translateX(100px); opacity: 0;}/*to*/
+
+.fade-in{transition: all 2s ease;}
+.fade-in.ng-leave{opacity: 1;}/*from*/
+.fade-in.ng-leave.ng-leave-active{opacity: 0;}/*to*/

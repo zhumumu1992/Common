@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="test">
+	<head>
+		<meta charset="utf-8">
+		<title>验证密码—模块</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller="myCtrl">
+		<h1>核对暗号</h1>
+		<div>太阳说:{{name==pw?'认证完毕,指令正确!':result+pw}}</div>
+		<div>月亮说:{{name}}</div>
+		<br>
+		<div class="right">
+			<input type="text" ng-model="name" placeholder="请月亮说话" />
+		</div>
+		<script>
+			var app = angular.module("test",[]);
+			app.controller("myCtrl",["$scope",function($scope){
+				var a,bc;
+				bc = 3;
+				a = 3 + 2 + bc; 
+				$scope.pw='123';
+				$scope.result='请出示正确指令!';
+			}]);
+		</script>
+	</body>
+	
+</html>

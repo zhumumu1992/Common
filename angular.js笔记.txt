@@ -1,0 +1,375 @@
+angular.js框架：完全使用js编写的客户端技术，同其他web技术（HTML,CSS和JS配合使用），
+特点：MVC：模型，视图，控制。
+AngularJS有五个主要核心特性：
+
+双向数据绑定 —— 实现了把model与view完全绑定在一起，model变化，view也变化，反之亦然。
+
+模板 —— 在AngularJS中，模板相当于HTML文件被浏览器解析到DOM中，AngularJS遍历这些DOM，也就是说AuguarJS把模板当做DOM来操作，去生成一些指令来完成对view的数据绑定。
+
+MVVM —— 吸收了传统的MVC设计模式针但又并不执行传统意义上的MVC，更接近于MVVM(Moodel-View-ViewModel)。
+
+依赖注入 —— AngularJS拥有内建的依赖注入子系统，可以帮助开发人员更容易的开发，理解和测试应用。
+
+指令 —— 可以用来创建自定义的标签，也可以用来装饰元素或者操作DOM属性。
+
+angular指令分为内部指令 ng开头的，和自定义指令。
+
+[ng-app初始化一个 AngularJS 应用程序。
+ng-init 初始化应用程序数据。通常情况下，不使用 ng-init，使用一个控制器或模块来代替它。
+ng-model把元素值（比如输入域的值）绑定到应用程序。
+ng-show='表达式'，当表达式的结果为true时，显示元素，否则隐藏元素。
+ng-hide='表达式'，当表达式的结果为true时，隐藏元素，否则显示元素。
+
+值绑定{{}}
+	语法：{{表达式}}	计算结果替换标记位置
+
+ng-bind	为元素绑定动态内容，可以替代{{}}，语法：<div ng-bind='表达式'></div>
+ng-repeat 对于集合中（数组中）的每个项会克隆一次 HTML 元素。
+ng-repeat语法：ng-repeat=‘item in ary’
+	遍历集合，或者为每个元素生成一个独立的模板实例。
+	功能属性：$index，遍历的进度，值（0，length-1）
+		 $first,$middle,$fast，遍历到特殊位置是值为true
+		 $even，遍历到索引值为偶数时值为tru
+		 $odd，遍历到索引值为奇数时值为true
+<li ng-repeat='item in ary' ng-class='$even?"red":"blue"'>{{item}}</li>
+<li ng-repeat='item in ary' ng-class='{red:$even,blue:$odd}'>{{item}}</li>
+
+ng-class 动态设置元素的类
+	语法：ng-class='表达式'
+	表达式两种写法：ng-class='表达式'
+		           ng-class={classname:表达式}
+
+$filter用来格式化数据。
+	使用方法：HTML中使用'|'管道过滤符，{{str|过滤器：参数}}
+		<p>{{str|uppercase}}</p>	大写
+		<p ng-bind="str | lowercase"></p>	小写
+		<p ng-bind="str3 | currency:'￥'"></p>	将数值转换为货币格式
+		<p ng-bind="str4 | limitTo:5"></p>		截取
+		 使用$filter调用过滤器，$filter（'过滤器'）（str，参数）   str是需要处理的数据、字符串、集合或其他类型的。
+		$scope.str2=$filter('uppercase')($scope.str2);
+
+【内置过滤器】
+将数值转换为货币格式，currency。
+limitTo:Num,限制字符串或数组的长度，如：ary | limitTo：2，只会显示ary的前两个元素。
+number:为数字做千位分割显示，number：3，设置保留小数点的位数。
+<p>number测试：{{num | number:3}}</p>
+
+date,将毫秒数格式转化为时间格式，data：yyyy年MM月dd日hh：mm：ss：sss
+date：'关键字'，short，fullDate
+$scope.time = (new Date()).getTime();
+<p>{{time | date:'yyyy年MM月dd日hh:mm:ss'}}</p>	2016年09月12日04：28：26:292
+<p>{{time | date:'short'}}</p>	9/12/16 4:28 PM
+<p>{{time | date:'fullDate'}}</p>	Monday, September 12, 2016
+
+orderBy,根据表达式对数组排序。
+orderBy：'表达式'：true
+	参数1：确定数组排序方法
+	参数2：是否反转排序，true是反转，false是不反转。默认是false。
+写法1：{{ orderBy_expression | orderBy : expression : reverse}}
+写法2：$filter('orderBy')(array, expression, reverse)
+
+filter(这个没有$)，根据匹配结果从数组中选择一个子集，过滤的意思。
+	参数1：字符串，返回包含字符串的元素
+	参数2：json形式{attr：query}进行多项目筛选过滤
+	参数3：function形式，
+
+自定义过滤器：angular.module().filter("filterName"，function(){
+	return function(过滤器处理的数据){
+		return 数据.substr(0,2);
+	}
+})
+过滤器处理的数据 | filterName
+过滤器处理的数据可以是字符串 数组 集合...
+
+	
+设计结构：
+	模块，包含定义具体功能的代码。 语法：angular.module{'name',[依赖列表]}
+	声明一个模块，setter功能。
+	缺省第二参数时是获取一个应用，getter功能。
+	
+$rootScope
+	ng-app为angularJS应用创建$rootScope。
+	$rootScope是所有$scope对象的最上层。
+	$rootScope是唯一的，不可复制的。$scope可以有多个。
+
+指令ng-controller
+	以$rootScope或另外一个ng-controller的作用域为原型创建新的子作用域。
+
+$scope是angularJS的核心基础。
+
+服务器通信—$http服务
+	简单的封装了浏览器原生的window.XMLHttpRequest{XHR}对象，提供了XMLHttpRequest对象的底层访问功能
+	$http({参数}).success{callback}.error(cb)
+	$http({参数}).then{success,error}
+两种设置回调函数的方法
+	.then(function(resp){//success},function(resp){//error})
+	.success(function(resp){//success}).error(function(resp){//error}
+
+$http({参数})—常用参数（客户端给服务端）
+	method:设置HTTP发送请求的方法，常用的get/post , jsonp
+	url：绝对或相对
+	params：{key：value}，会被转化为查询字符串追加到url后面。 （集合）
+	data：字符串或对象，当做消息体发送给服务器，通常与post方法配合使用（字符串、数组或集合）
+【传递数据：params或data,以{}形式设置参数。params与get方法配合使用，data和post方法配合使用】
+	cache：布尔值，是否缓存。默认对get请求缓存。
+
+$http服务响应对象的主要参数（服务端给客户端的）
+	回调函数带给客户端的参数
+	data，响应体，承载着获取的数据
+	status，响应的http状态码
+	传递给then.success.error的参数/属性
+	
+语法：$http({url:"",
+	     method:post/get, 
+	     params:{key：value}, 
+	     data:字符串、数组或集合
+	   }).then(function(resp){},function(resp){})
+
+$http服务—常用的快捷使用方式
+	$http.get('url').success(cb).error(cb)
+	$http.jsonp('url').success(cb).error(cb)
+	$http.post('url',data).success(cb).error(cb)
+
+$http—get方法向服务端传递参数
+	通过url传递参数，通常用在一般参数的传输
+	两种实现方法:
+		写在url参数尾部：“?key=value&key2=value2” 
+		在params参数中设置：params：{key：v,key2：v2}
+
+	$http.get('url?key=value&key2=value2').success(function(resp){}).error(function(resp){})
+
+window.location.href	获取当前页面的全部URL
+
+$http—post方法向服务端传递参数
+	通常用于有数据安全要求的时候，比如用户名密码等
+	使用data参数，data：{string/集合/数组	}
+
+【自定义指令】
+	directive(name,factory_function)
+	name:自定义指令的名字，用来在视图中引用指令
+	factory_function:返回一个包含指令全部行为的对象
+
+自定义指令的形式
+	元素—‘E’
+	属性—‘A’，默认的
+	class类名—‘C’
+	注释—‘M’
+
+restrict：'string',用来定义指令的形式。可选参数，默认值是‘A’，即以属性的形式来声明。
+template：‘string/function’，可选参数，string时用来定义元素的内容，function时用来定义属性的功能。
+replace：true/false，默认是false，false时指令作为子元素插入到dom中。
+transclude：true/false，默认是false，false时会忽略使用的指令的子元素/内容，true时，配合ng-transclude将指令的
+子元素/内容渲染到ng-transclude占位的元素上
+link:function($scope,$element,$attrs){} 操作dom元素
+
+【.是属于的关系，右边属于左边 左边是父集】
+
+自定义指令的参数—scope
+	可选参数，可以设置指令的作用域
+	默认值是false，指令访问父集作用域，会影响父级
+	scope：true，从父集继承并创建一个新的作用域对象，形成一个隔离作用域
+	scope：{}, 等于对象的时候，不能继承父级controller里面的作用域。 为true和false时可以继承。
+	隔离作用域：避免被父集作用域污染，封装组件通常采用隔离作用域
+
+加载html模板
+	ng-include='表达式'，表达式结果是字符串
+	ng-include="'file.html'"
+	ng-include="'template.id'"
+	从父集作用域继承并创建一个新的子作用域，当与ng-controller出现在同一元素上时，
+	ng-include与ng-controller共用一个作用域
+
+预定义模板
+	<script type='text/ng-template' id='a.html'>
+	占用内存，移动端项目不建议过多使用此方法
+
+angular工作流
+	模块加载阶段，run，路由成功加载
+
+配置
+	module加载前对其自身的配置
+	module().config(function($routeProvider){})
+
+多视图和路由
+	将视图分解成布局和模板视图，根据用户访问的url来展示对应的视图
+	$routeProvider模块、$route
+	安装
+	     引入angular-route.js
+	     angular.module('myApp',['ngRoute'])
+
+多视图和路由—模板布局
+	ng-view：和路由组合后，指定路由所对应的视图的渲染位置（占位）
+
+多视图和路由—定义路由
+	在config里定义路由
+	$routeProvider.when(path.route)
+	参数path与$location.path相匹配
+
+$routeProvider.when(path.route)
+	参数route是配置对象，包括
+		controller：‘控制器名’
+		template：‘内容’
+		templateUrl：‘views/template_name.html’
+	意外路径重定向：.otherwise(path)
+
+创建路由步骤：
+	1、引用JS
+	2、module(name，[‘ngRoute’]) 注入依赖
+	3、.config(function($routeProvider){ 
+		$routeProvider.when('/path'，{
+			template:'元素内容'/载入外部文件用templateUrl
+		})
+	     })
+	4、添加ng-view 显示路由内容
+
+为子页面添加controller
+	1、ng-controller=‘name’
+	2、.when('/path'，{
+		controller：‘name’
+	})
+	3、module().controller（'name'，['$scope'，function($scope){
+	      }]）
+
+	方法1：<p>#/project/lucy</p>
+	           <p>#/project/:name</p>
+	方法2：<p>#/project?name=lucy</p>
+	<p>name是参数名，lucy是传递的值</p>
+	<p>$routeParams是一个{}，包含url带的参数，name = $routeParams.name</p>
+	路由定义中的参数名，用在需要获取路由参数的地方：$routeParams
+
+JS中改变路由
+	$location.path（'url'）
+$location服务
+	对JavaScript中的window.location对象进行了封装并与angularjs集成在一起
+	功能：访问路由、修改路径、导航
+
+	console.log('获取当前客户端路由'+$location.path());    //.url和.path一样，给参数时改变路由，不给参数时获取客户端路由
+	console.log('获取服务端路由host'+$location.host());
+	console.log('获取完整的url'+$window.location.href);
+	console.log('获取编码后完整的url'+$location.absUrl());
+	console.log('获取url中的hash片段'+$location.hash());
+	console.log('获取url的端口号'+$location.port());
+	console.log('获取url的协议'+$location.protocol());
+	console.log('获取url的参数'+$location.Search());	   //search为空时，获取url的参数。search给参数时，会给url设置参数。
+	
+module执行的第一步—.run()
+	Angular应用的第一个执行的方法
+	module().run(function($rootScope){})
+	通常用于：
+		初始化全局常量、变量、注册全局事件等
+		登录身份验证功能的最合适位置
+
+添加路由事件步骤：
+	1、.run(['$rootScope',function($rootScope){
+		2、$rootScope.$on('路由事件名',function(event,next,current){ //回调函数
+			$routeChangeStart		路由变化前触发
+			$routeChangeSuccess	路由改变成功时触发	
+			$routeChangeError		路由变化出错时触发
+		     })
+	}])
+
+factory服务
+	服务是一个单例对象，在每个应用中只会被实例化一次，并且是延迟加载的（需要时才会被创建）
+	服务提供了把与特定功能相关联的方法集中在一起的借口，做贯穿整站的功能，比如登录功能，存储在factory里。
+
+module().factory('factoryName',function(){})
+
+angular.element(dom),将dom对象转换为jQuery对象
+	
+
+添加jqlite步骤：
+	1、angular.element(dom元素)   dom对象，使用原生api查找到的dom元素，document。getElementById.....
+	2、$compile(字符串)(作用域)   作用域指的是$scope/$rootScope代表作用域的对象
+	3、jq查找出的对象.append(angular转换后的对象)
+
+angularJS表单验证—form元素的指令
+	ng-submit='事件回调函数'，相应提交事件，与type="submit"的按钮配合使用
+
+angularJS表单验证—表单的控制变量
+	formName.$invalid，不合法的表单，true是不合法，false是合法
+	formName.$valid，合法的表单，true是合法，false是不合法
+	formName.$error，不能验证的表单，true是验证失败，false是验证成功
+
+required必填项
+表单中的class样式
+	可以在调试器的elements中看到angular为表单添加了很多class名，常见的有：
+	ng-pristine	未修改
+	ng-dirty		已修改
+	ng-valid	 	通过验证
+	ng-invalid	未通过验证
+
+ngMessages—自定义表单验证信息
+	安装：1、引入JS文件    2、注入依赖，ngMessages
+
+ngMessages相关指令
+	ng-messages="formName.inputName.$error"
+	ng-message="规则string"  required，minlength，maxlength
+	ng-message-exp="规则表达式"
+	ng-messages-multiple，显示多条提示信息
+	ng-messages-include，引入模板
+
+AngularJS扩展-ngAnimate动画
+	安装：1、引入JS文件    2、注入依赖，ngAnimate
+
+【指令】				【事件】		【class命名】
+ngRepeat		enter，leave，move	.className.ng-enter/ng-leave/ng-move
+ngView			enter，leave		.className.ng-enter.ng-enter-active / .ng-leave.ng-leave-active
+ngInclude		enter，leave		.className.ng-enter.ng-enter-active / .ng-leave.ng-leave-active
+ngSwitch			enter，leave		同上
+ngIf			enter，leave		同上
+ngClass或者class=""	add，remove		.className1.className2-add / .className1.className2-remove
+ngShow			add,remove(.ng-class)	.className.ng-hide-add / .ng-hide-add-active
+ngHide			add,remove		.className.ng-hide-remove / .ng-hide-remove-active
+	
+ng-show和ng-hide命名规则
+	.myClass.ng-hide-事件名
+
+ngAnimate—javascript创建动画
+	.animation('.className'，function(){})
+
+【重点--路由】
+ui-router—路由框架
+	angularJS-ui开发的嵌套路由 http://github.com/angular-ui/ui-router
+	注意与angular版本匹配
+
+ui-router安装：引入angular-ui-router    注入依赖 ui.router
+
+ui-router—设置路由
+	视图指令<div ui-view></div>，每个视图都可以嵌套ui-view，实现嵌套路由
+	路由设置：$stateProvider
+	url参数对象：$stateParams
+
+ui-router—路由跳转
+	url设置参数：
+		“/path/:path””
+		“/path/{param}/{param}”
+	a标签路由传参：
+		<a href="#/path/1"></a>
+		<a ui-sref="stateName({param：1})"></a>
+	JS跳转路由：
+		$state.go('stateName'，{param：1})
+
+.config(function($stateProvider,$urlRouterProvider){
+	$stateProvider.state('state',{
+		url:'/path ',
+		templateUrl:' '
+	})
+	.state('state.p2',{
+		url:'/path ',
+		templateUrl:' '
+	})
+	$urlRouterProvider.otherwise('/pathurl');
+})
+
+ui-router状态事件：
+	监听：
+		监听代码位置：module（）.run
+		语句：$rootScope.$on("eventName",callback)
+	事件：
+		$stateChangeStart
+		$stateNotFound
+		$stateChangeSuccess
+		$stateChangeError
+
+ui-router视图加载事件：
+	$viewContentLoading，视图开始加载至dom加载成功之前，也就是试图加载中，制作loading提示
+	$viewContentLoaded，视图加载完，即视图的dom加载完

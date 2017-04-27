@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>页面访问次数</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-app="app" ng-controller="ctrl">
+		<p>当前页面访问{{time}}次</p>
+		
+	</body>
+	<script>
+		angular.module('app',[]).controller('ctrl',['$scope','$http',function($scope,$http){
+			$scope.time = 0;																		/*?from=baidu&m=21*/
+			$http.get('http://127.0.0.1:8020/0907/visitedTime.json',{from:'baidu',m:1}).success(function(resp){
+				console.log("成功");
+				$scope.time = resp.time;
+				
+			}).error(function(resp){
+				console.log("失败");
+				console.log(resp);
+				
+			})
+			
+			/*$http({
+				url:'http://127.0.0.1:8020/0907/visitedTime.json',
+				params:{from:'baidu',m:1},
+				mathod:'get'}).success(function(resp){
+				console.log("成功");
+				$scope.time = resp.time;
+			}).error(function(resp){
+				console.log("失败");
+				console.log(resp);
+				
+			})*/
+			
+		}])
+	</script>
+</html>

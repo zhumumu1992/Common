@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>过滤器名单</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller="myCtrl">
+		<div>全局搜索
+			<input type="text" ng-model="kewword_all" placeholder="全局搜索" />
+		</div>
+		<table border="1" cellpadding="0" cellspacing="0">
+			<tr align="center">
+				<td>职业</td>
+				<td>时间</td>
+				<td>年龄</td>
+				<td>门派</td>
+				<td>爱好</td>
+				<td>技能</td>
+				<td>资产</td>
+			</tr>
+			<tr ng-repeat='item in ary | filter:kewword_all' align="center">
+				<td>{{item.name}}</td>
+				<td>{{item.time | date:'yyyy年MM月dd日hh:mm:ss:sss'}}</td>
+				<td>{{item.age}}</td>
+				<td>{{item.from}}</td>
+				<td>{{item.ah}}</td>
+				<td>{{item.power}}</td>
+				<td>{{item.asset | currency:'￥' || number:2}}</td>
+			</tr>
+		</table>
+		<!--全局搜索-->
+		
+		<div>按爱好查找
+			<input type="text" ng-model="kewword_ah" placeholder="请输入爱好" />
+		</div>
+		<table border="1" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>姓名</td>
+				<td>入职时间</td>
+				<td>年龄</td>
+				<td>籍贯</td>
+				<td>爱好</td>
+				<td>技能</td>
+				<td>资产</td>
+			</tr>
+			<tr ng-repeat='item in ary | filter:{ah:kewword_ah}'>
+				<td>{{item.name}}</td>
+				<td>{{item.time | date:'yyyy年MM月dd日hh:mm:ss:sss'}}</td>
+				<td>{{item.age}}</td>
+				<td>{{item.from}}</td>
+				<td>{{item.ah}}</td>
+				<td>{{item.power}}</td>
+				<td>{{item.asset | currency:'￥' || number:2}}</td>
+			</tr>
+		</table>
+		<!--按爱好查找-->
+		
+		<select ng-model='selectValue'>
+			<option value="1">年龄小于20</option>
+			<option value="2">年龄大于20</option>
+			<option value="3">年龄大于30</option>
+		</select>
+		<table border="1" cellpadding="0" cellspacing="1">
+			<tr>
+				<td>姓名</td>
+				<td>入职时间</td>
+				<td>年龄</td>
+				<td>籍贯</td>
+				<td>爱好</td>
+				<td>技能</td>
+				<td>资产</td>
+			</tr>
+			<tr ng-repeat='item in ary | filter:myFilter'>
+				<td>{{item.name}}</td>
+				<td>{{item.time | date:'yyyy年MM月dd日hh:mm:ss:sss'}}</td>
+				<td>{{item.age}}</td>
+				<td>{{item.from}}</td>
+				<td>{{item.ah}}</td>
+				<td>{{item.power}}</td>
+				<td>{{item.asset | currency:'￥' || number:2}}</td>
+			</tr>
+		</table>
+		<!--按年龄查找-->
+		
+		<div>按爱好年龄查找
+			<input type="text" ng-model="kewword_ah" placeholder="请输入爱好"/>
+			<select ng-model='age1'>
+				<option value="1">年龄小于20</option>
+				<option value="2">年龄大于等于20</option>
+			</select>
+		</div>
+		<table border="1" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>姓名</td>
+				<td>入职时间</td>
+				<td>年龄</td>
+				<td>籍贯</td>
+				<td>爱好</td>
+				<td>技能</td>
+				<td>资产</td>
+			</tr>
+			<tr ng-repeat='item in ary | filter:filterAge'>
+				<td>{{item.name}}</td>
+				<td>{{item.time | date:'yyyy年MM月dd日hh:mm:ss:sss'}}</td>
+				<td>{{item.age}}</td>
+				<td>{{item.from}}</td>
+				<td>{{item.ah}}</td>
+				<td>{{item.power}}</td>
+				<td>{{item.asset | currency:'￥' || number:2}}</td>
+			</tr>
+		</table>
+		<!--按爱好年龄查找-->
+		
+	</body>
+	<script>
+		angular.module('app',[]).controller('myCtrl',['$scope',function($scope){
+			$scope.ary = [
+				{
+					name:'唐门',
+					time:'2015.01',
+					age:'18',
+					from:'四川',
+					ah:'骑行，听歌，看电影，美剧相声玩游戏',
+					power:'傀儡，扇子，花雨漫天',
+					asset:'1234567'
+				},
+				{
+					name:'五毒',
+					time:'2015.02',
+					age:'16',
+					from:'云南',
+					ah:'跑步，健身，汽车，自行车',
+					power:'双刃，蜃意无双，百鬼潜行',
+					asset:'2345678'
+				},
+				{
+					name:'太白',
+					time:'2015.03',
+					age:'24',
+					from:'青海',
+					ah:'自动步枪，狙击枪，轻音乐，电音DJ',
+					power:'剑，爆发，飞燕逐月',
+					asset:'3456789'
+				},
+				{
+					name:'神威',
+					time:'2015.04',
+					age:'31',
+					from:'河北',
+					ah:'骑车，看美剧，WOW，25人团本',
+					power:'长枪，坦克，背水一击',
+					asset:'4567890'
+				}
+			];
+			
+			//按年龄查找
+			$scope.myFilter = function(obj,index,ary){
+				if($scope.selectValue=='1'){
+					return obj.age<20;
+				}else if($scope.selectValue=='2'){
+					return obj.age>20;
+				}else if($scope.selectValue=='3'){
+					return obj.age>30;
+				}
+			}
+			
+			//按爱好年龄查找
+			$scope.filterAge = function(obj,index,ary){
+				var ahIndexOf = obj.ah.indexOf($scope.kewword_ah)>-1;
+				if($scope.age1 == "1"){
+					return obj.age<20 && ahIndexOf;
+				}else if($scope.age1 == "2"){
+					return obj.age>=20 && ahIndexOf;
+				}
+			}
+			
+		}])
+	</script>
+</html>
+ 

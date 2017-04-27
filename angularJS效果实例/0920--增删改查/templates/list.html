@@ -1,0 +1,24 @@
+<form action="" class="liebiao">
+	<table border="1" cellpadding="1" cellspacing="1">
+		<tr align="center">
+			<td>姓名</td>
+			<td>性别</td>
+			<td>出生日期</td>
+			<td>职业</td>
+			<td>操作</td>
+		</tr>
+		<tr ng-repeat='item in ary' align="center" class="ani-for-repeat">
+			<td>{{item.name}}</td>
+			<td>{{item.sex}}</td>
+			<td>{{item.year}}年{{item.month}}月{{item.date}}日</td>
+			<td>{{item.work}}</td>
+			<td>
+				<a href="{{'#/chakan/'+$index}}" >查看</a>
+				<a href="" ng-click="remove($index)">删除</a>
+				<a href="{{'#/xiugai/'+$index}}">修改</a>
+				<a href="#/denglu">登录</a>
+			</td>
+		</tr>
+	</table>
+	<button ng-click="xinzeng('/xiugai/-1')" class="fade-in">新增一组</button>
+</form>

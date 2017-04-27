@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="test">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>随机点名</title>
+		<script src="angular.min.js"></script>
+		<style>
+			.reds{color: red;}
+		</style>
+	</head>
+
+	<body ng-controller="myCtrl">
+		<h1>点名器</h1>
+		<h1 ng-show="test">请<span ng-bind="red" class="reds"></span>回答问题</h1>
+		<button ng-show="!test" ng-click="dosave()">请点击按钮随机抽取一个人名字</button>
+		<button ng-show="test" ng-click="test=false;">回答完毕</button>
+
+		<script>
+			var app = angular.module('test', []);
+			app.controller('myCtrl', ['$scope', function($scope) {
+				$scope.red = '';
+				$scope.names = ['陈天民', '朱森林', '冯爽', '张悦', '安冬', '曹正', '苗慧龙', '邢啸亮', '曹东升', '田舰航', '王丛', '古雅茹', '王佳宇', '索晓鹏', '梁震', '崔可欣', '凌星宇', '阎来超', '聂钟钥', '晋博', '樊佳豪', '李建超'];
+				$scope.test = false;
+				$scope.dosave = function() {
+					var _index = parseInt(Math.random() * $scope.names.length);
+					$scope.red = $scope.names[_index];
+					$scope.test = true;
+				}
+			}]);
+		</script>
+	</body>
+	<html>

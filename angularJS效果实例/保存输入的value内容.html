@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>保存输入的value内容</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller="ctrl">
+		<h1 ng-show="name_input=='' && ary.length<1">世界静悄悄的，一个人都没有</h1>
+		<h1 ng-show="name_input!='' || ary.length>0">hello,{{name_input}},总算等到你了</h1>
+		<input type="text" ng-model="name_input" value="" />
+		<input type="button" value="保存" ng-click="doSave();"  />
+		<hr />
+		<ul>访客记录:
+			<li ng-repeat='item in ary' ng-bind='item'></li>
+		</ul>
+		
+		<script>
+			var app = angular.module('app',[])
+			app.controller('ctrl',['$scope',function($scope){
+				$scope.name_input='';
+				$scope.ary=[];
+				$scope.doSave=function(){
+					if($scope.ary.indexOf($scope.name_input) == -1){
+						$scope.ary.push($scope.name_input);
+					}else{
+						alert('输入的内容重复,请重新输入');
+					}
+					
+				}
+			}])
+		</script>
+	</body>
+</html>

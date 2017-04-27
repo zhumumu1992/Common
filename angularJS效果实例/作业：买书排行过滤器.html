@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>作业：买书排行过滤器</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller="myCtrl">
+		<center>
+			全局搜索<input type="text" ng-model="kewword_all" placeholder="全局搜索" />
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr align="center">
+					<td>书名</td>
+					<td>发货地</td>
+					<td>出版社</td>
+					<td>出版日期</td>
+					<td>价格</td>
+					<td>销量</td>
+					<td>配送方式</td>
+					<td>图片</td>
+					<td>一句话简介</td>
+				</tr>
+				<tr ng-repeat='item in ary | filter:kewword_all' align="center">
+					<td>{{item.name}}</td>
+					<td>{{item.dizhi}}</td>
+					<td>{{item.chubanshe}}</td>
+					<td>{{item.chubanrq}}</td>
+					<td>{{item.jiage | currency:'￥' || number:2}}</td>
+					<td>{{item.xiaoliang}}</td>
+					<td>{{item.peisongfs}}</td>
+					<td>{{item.tupian}}</td>
+					<td>{{item.jianjie}}</td>
+				</tr>
+			</table>
+		</center>
+		<!--全局搜索-->
+		<br /><br /><br />
+		<center>
+			按价格查找<select ng-model='jiagetValue'>
+				<option value="1">价格小于20元</option>
+				<option value="2">价格小于30元</option>
+				<option value="3">价格大于30元</option>
+			</select>
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr align="center">
+					<td>书名</td>
+					<td>发货地</td>
+					<td>出版社</td>
+					<td>出版日期</td>
+					<td>价格</td>
+					<td>销量</td>
+					<td>配送方式</td>
+					<td>图片</td>
+					<td>一句话简介</td>
+				</tr>
+				<tr ng-repeat='item in ary | filter:myjiage' align="center">
+					<td>{{item.name}}</td>
+					<td>{{item.dizhi}}</td>
+					<td>{{item.chubanshe}}</td>
+					<td>{{item.chubanrq}}</td>
+					<td>{{item.jiage | currency:'￥' || number:2}}</td>
+					<td>{{item.xiaoliang}}</td>
+					<td>{{item.peisongfs}}</td>
+					<td>{{item.tupian}}</td>
+					<td>{{item.jianjie}}</td>
+				</tr>
+			</table>
+		</center>
+		<!--按价格查找-->
+		<br /><br /><br />
+		
+		<center>
+			按销量和价格查找<input type="text" ng-model="kewword_xiaoliang" placeholder="请输入销量"/>
+			<select ng-model='jiage1'>
+				<option value="1">价格小于20元</option>
+				<option value="2">价格小于30元</option>
+				<option value="3">价格大于30元</option>
+			</select>
+			<table border="1" cellpadding="0" cellspacing="0">
+				<tr align="center">
+					<td>书名</td>
+					<td>发货地</td>
+					<td>出版社</td>
+					<td>出版日期</td>
+					<td>价格</td>
+					<td>销量</td>
+					<td>配送方式</td>
+					<td>图片</td>
+					<td>一句话简介</td>
+				</tr>
+				<tr ng-repeat='item in ary | filter:myXiaoliangJiage' align="center">
+					<td>{{item.name}}</td>
+					<td>{{item.dizhi}}</td>
+					<td>{{item.chubanshe}}</td>
+					<td>{{item.chubanrq}}</td>
+					<td>{{item.jiage | currency:'￥' || number:2}}</td>
+					<td>{{item.xiaoliang}}</td>
+					<td>{{item.peisongfs}}</td>
+					<td>{{item.tupian}}</td>
+					<td>{{item.jianjie}}</td>
+				</tr>
+			</table>
+		</center>
+		<!--按销量和价格查找-->
+		
+	</body>
+	<script>
+		angular.module('app',[]).controller('myCtrl',['$scope',function($scope){
+			$scope.ary = [
+				{
+					name:'追风筝的人',
+					dizhi:'北京',
+					chubanshe:'上海人民出版社',
+					chubanrq:'2013年06月',
+					jiage:'29',
+					xiaoliang:'26740',
+					peisongfs:'快递',
+					tupian:'img/追风筝的人.png',
+					jianjie:'追风筝的人，追逐的是人性中最美好的那些品质：善良、忠于友谊、忠于自己内心的良知。'
+				},
+				{
+					name:'解忧杂货店',
+					dizhi:'上海',
+					chubanshe:'南海出版公司',
+					chubanrq:'2014年05月',
+					jiage:'39',
+					xiaoliang:'22512',
+					peisongfs:'快递',
+					tupian:'img/解忧杂货店.png',
+					jianjie:'有时伤害，有时相助，人们总是在不经意的时候与他人的人生紧密相连。'
+				},
+				{
+					name:'幼儿情绪管理互动读本',
+					dizhi:'深圳',
+					chubanshe:'人民邮电出版社',
+					chubanrq:'2011年03月',
+					jiage:'16',
+					xiaoliang:'27751',
+					peisongfs:'快递',
+					tupian:'img/幼儿情绪管理互动读本.png',
+					jianjie:'非常好的一套故事书，图片清晰，语言流畅，印刷好，无异味，内容通俗易懂，画面也很可爱。'
+				},
+			];
+			
+			//按年龄查找
+			$scope.myjiage = function(obj,index,ary){
+				if($scope.jiagetValue=='1'){
+					return obj.jiage<20;
+				}else if($scope.jiagetValue=='2'){
+					return obj.jiage<30;
+				}else if($scope.jiagetValue=='3'){
+					return obj.jiage>30;
+				}
+			}
+			
+			//按销量和价格查找
+			$scope.myXiaoliangJiage = function(obj,index,ary){
+				var xiaoliangIndexOf = obj.xiaoliang.indexOf($scope.kewword_xiaoliang)>-1;
+				if($scope.jiage1 == "1"){
+					return obj.jiage<20 && xiaoliangIndexOf;
+				}else if($scope.jiage1 == "2"){
+					return obj.jiage<30 && xiaoliangIndexOf;
+				}else if($scope.jiage1 == "3"){
+					return obj.jiage>30 && xiaoliangIndexOf;
+				}
+			}
+			
+		}])
+	</script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>数组排序orderBy</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller='ctrl'>
+		<table>
+			<tr>
+				<td>姓名</td>
+				<td>年龄</td>
+			</tr>
+			<!--<tr ng-repeat='item in ary | orderBy:"age":true'>-->
+			<!--<tr ng-repeat='item in ary | orderBy:["name","age"]'>-->
+			<tr ng-repeat='item in ary | orderBy:orderByFun'>
+				<td>{{item.name}}</td>
+				<td>{{item.age}}</td>
+			</tr>
+			
+			
+		</table>
+	</body>
+	<script>
+		angular.module('app',[]).controller('ctrl',['$scope',function($scope){
+			$scope.orderByFun = function(obj){
+				return obj.name
+			}
+			
+			$scope.ary = [
+				{
+					name:'aaa',
+					age:23
+				},
+				{
+					name:'bbb',
+					age:24
+				},
+				{
+					name:'ccc',
+					age:25
+				},
+				{
+					name:'ccc',
+					age:26
+				},
+				{
+					name:'ddd',
+					age:27
+				}
+			]
+		}])
+	</script>
+</html>

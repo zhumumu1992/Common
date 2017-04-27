@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>老师版angularJS选项卡</title>
+		<style>
+			*{margin:0;padding:0;}
+		    div{width:1200px; height:419px; border:1px solid red; text-align:center; margin: 0px auto;
+		        line-height:500px; font-size:36px; font-weight:bold; -position: absolute; top: 20px; left: 0;}
+		    div img{width: 960px; height: 419px; float: left;}
+		    div p{float: right; width: auto; height: 419px;}
+		    button{width: 20px; height: 20px; border-radius: 50%; background: #f69; z-index: 2;
+		    	   border: 1px solid #000; margin-left: 10px; margin-top: 50px;}
+		    button:first-child{margin-left: 600px;}	   
+		</style>
+		<script src="angular.min.js"></script>
+	</head>
+
+	<body ng-app="app" ng-controller="ctrl">
+		<button ng-repeat="item in ary" ng-click="btn($index)">{{item.btnName}}</button>
+		<div ng-repeat="item in ary" ng-show="$index == xb">
+			<img src="{{item.pic}}" />
+			<p>{{item.text}}</p>
+		</div>
+	</body>
+	<script>
+		angular.module('app',[]).controller('ctrl',['$scope',function($scope){
+			$scope.xb = 0;
+			$scope.ary = [
+				{
+					"btnName": "1",
+					"pic":"img/6.jpg",
+					"text":"唐门"
+				}, 
+				{
+					"btnName": "2",
+					"pic":"img/8.jpg",
+					"text":"太白"
+				}, 
+				{
+					"btnName": "3",
+					"pic":"img/9.jpg",
+					"text":"神威"
+				}, 
+				{
+					"btnName": "4",
+					"pic":"img/10.jpg",
+					"text":"天香"
+				}, 
+				{
+					"btnName": "5",
+					"pic":"img/11.jpg",
+					"text":"真武"
+				}
+			];
+			
+			$scope.btn = function(index){
+				$scope.xb = index;
+			}
+			
+		}]);
+	</script>
+</html>

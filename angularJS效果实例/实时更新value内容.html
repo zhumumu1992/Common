@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app ng-init="yourName='';">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.red{background: deepskyblue;}
+		</style>	
+		<script src="angular.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<h1 class="{{yourName}}" ng-show="yourName!=''">hello,<span class="red">{{yourName}}</span>,总算等到你了</h1>
+			<h1 ng-hide="yourName!=''">世界静悄悄的，一个人都没有</h1>
+			<input type="text" ng-model="yourName" placeholder="请输入你的名字" />
+		</div>
+	</body>
+</html>

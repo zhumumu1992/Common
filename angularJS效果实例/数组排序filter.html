@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>数组排序filter</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body ng-controller='ctrl'>
+		姓名：<input type="text" ng-model='query' />
+		年龄：<input type="text" ng-model='age' />
+		<select ng-model="selectValue" >
+			<option value="1">小于20</option>
+			<option value="2">等于20</option>
+			<option value="3">大于20</option>
+		</select>
+		<table>
+			<tr>
+				<td>姓名</td>
+				<td>年龄</td>
+			</tr>
+			<!--<tr ng-repeat='item in ary | filter:"query"'>-->
+			<!--<tr ng-repeat='item in ary | filter:{age:age,name:query}'>-->	
+			<tr ng-repeat='item in ary | filter:myFilter'>
+				<td>{{item.name}}</td>
+				<td>{{item.age}}</td>
+			</tr>
+			
+			
+		</table>
+	</body>
+	<script>
+		angular.module('app',[]).controller('ctrl',['$scope',function($scope){
+			$scope.myFilter = function(obj,index,ary){
+				if($scope.selectValue == "1"){
+					return obj.age<20;
+				}else if($scope.selectValue == "2"){
+					return obj.age==20;
+				}else if($scope.selectValue == "3"){
+					return obj.age>20;
+				}
+			}
+			
+			$scope.orderByFun = function(obj){
+				return obj.name;
+			}
+			
+			$scope.ary = [
+				{
+					name:'aaa',
+					age:18
+				},
+				{
+					name:'bbb',
+					age:20
+				},
+				{
+					name:'ccc',
+					age:31
+				},
+				{
+					name:'ccc',
+					age:24
+				},
+				{
+					name:'ddd',
+					age:31
+				}
+			]
+		}])
+	</script>
+</html>

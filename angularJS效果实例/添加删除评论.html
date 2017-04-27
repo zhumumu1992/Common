@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.6.2.min.js"></script>
+		<script src="js/angular.js"></script>
+		<script src="js/angular-route.js"></script>
+		<script src="js/app1.js"></script>
+		<style>
+			p{display: block;}
+			textarea{display: block; width: 600px; height: 300px;}
+			button{display: block; margin-top: 20px;}
+			li{list-style: none;}
+			div{width: 60%; height: 100px; background: #ccc;}
+			div a{float: right; margin-right: 30px;}
+		</style>
+	</head>
+	<body ng-controller="ctrl">
+		<p>用户名:<input type="text" ng-model="name" /></p>
+		评论:<textarea ng-model="say"></textarea>
+		<button ng-click="tijiao()">提交</button>
+		
+		<div ng-repeat="item in ary">
+			<p>用户:{{item.name}}</p>
+			<p>评论:{{item.say}}</p>
+			<p>评价时间:{{item.time | date:'yyyy年MM月dd日hh:mm:ss'}}<a href="" ng-click="remove($index)" >删除评论</a></p>
+			
+		</div>
+		
+	</body>
+</html>

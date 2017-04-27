@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html ng-app="gameApp">
+	<head>
+		<meta charset="utf-8">
+		<title>作业：捡积分老师版</title>
+		<script src="angular.min.js"></script>
+		<style>
+			*{margin: 0; padding: 0;}
+			h2{text-align: center; margin: 100px auto;}
+			.table{width: 456px; height: 456px; margin: 100px auto; clear: both;}
+			.grid{list-style: none; width: 150px; height: 150px; background: #fff; font-size: 30px;
+				  text-align: center;line-height: 150px; border: 1px solid #000; float: left;}
+			.bgGreen{background: green;}
+			.bgRed{background: red;}
+		</style>
+	</head>
+	<body ng-controller="ganmeCtrl">
+		<h2>得分:{{score}}</h2>
+		<ul class="table">
+			<li class="grid" ng-repeat="item in gridData"
+				ng-click="clickGrid(item)" 
+				ng-mouseenter="mouseenterGrid(item)"
+				ng-mouseleave="mouseleaveGrid(item)"
+				ng-class="{bgGreen:item.isHover,bgRed:item.isErr}"
+				ng-bind="item.isShowScore?item.score:item.html"></li>
+		</ul>
+	</body>
+	<script> 
+		angular.module('gameApp',[]).controller('ganmeCtrl',['$scope',function($scope){
+			//静态变量
+			var grid_cnt = 9,score_min = -10,score_max = 20;
+			
+			//得分
+			$scope.score = 0;
+			
+			//格子数据
+			$scope.gridData = [];
+			for(var i=0; i<grid_cnt; i++){
+				//创造格子属性
+				$scope.gridData.push({
+					html:''				//动态内容
+					,score:getRandom(score_min,score_max)	//分值
+					,isShowScore:false	//是否显示数据
+					,isHover:false		//鼠标是否移入
+					,isErr:false		//是否错误操作
+				});
+			}
+			
+			//取区间随机数
+			function getRandom(min,max){
+				return parseInt(Math.random()*(max-min)+min);
+			}
+			
+			//当前处于显示状态的格子的Id
+			$scope.currentGrid = -1;
+			
+			//上次随机给子index
+			var random_num = -1;
+			
+			//显示数值方法
+			function showGridScore(){
+				var index = getRandom(0,$scope.gridData.length-1);
+				//排除重复，不连续两次随机数一样
+				if(index == random_num){
+					showGridScore();
+					return;
+				}
+				random_num = index;
+				$scope.currentGrid = $scope.gridData[index];
+				$scope.currentGrid.isShowScore = true;
+				timer(function(){
+					$scope.currentGrid.isShowScore = false;
+					showGridScore();
+				},1000);
+			}
+			showGridScore();
+			
+			//定时器
+			function timer(callback,time){
+				setTimeout(function(){
+					callback();
+					$scope.$apply();
+				},time)
+			}
+			
+			//鼠标点击格子事件
+			$scope.clickGrid = function(item){
+				if(item.isShowScore){//显示数值
+					$scope.score += item.score;
+				}else{//不显示数值
+					item.isErr = true;
+					item.html = "X";
+					timer(function(){
+						item.isErr = false;
+						item.html = "";
+					},1000)
+				}
+				
+			}	
+			
+			//鼠标移入格子事件
+			$scope.mouseenterGrid = function(item){
+				item.isHover = true;
+				
+			}
+			
+			//鼠标移出格子事件
+			$scope.mouseleaveGrid = function(item){
+				item.isHover = false;
+			}
+			
+		}])	
+	</script>
+</html>

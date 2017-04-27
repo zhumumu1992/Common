@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html ng-app ng-init="pass='';">
+	<head>
+		<meta charset="utf-8">
+		<title>作业：验证密码</title>
+		<script src="angular.min.js"></script>
+	</head>
+	<body>
+		<h1>请输入密码-mssj</h1>
+		<input type="text" ng-model="pass" placeholder="请输入密码" />
+		<h1 ng-hide="pass=='mssj'">{{pass}}</h1>
+		<h1 ng-show="pass=='mssj'" style="color: limegreen;">密码正确，欢迎来到艾泽拉斯。</h1>
+	</body>
+</html>

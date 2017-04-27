@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<title>repeat功能属性</title>
+		<script src="angular.min.js"></script>
+		<style>
+			.red{background: red;}
+			.blue{background: deepskyblue;}
+		</style>
+	</head>
+	<body ng-controller='myCtrl'>
+		<ul>
+			<li ng-repeat='item in ary' ng-class='$even?"red":"blue"'>{{item}}</li>
+			<!--<li ng-repeat='item in ary' ng-class='{red:$even,blue:$odd}'>{{item}}</li>-->
+			<!--<li ng-repeat='item in ary'>{{$odd?item:'——奇数不显示元素值'}}</li>-->
+			<!--<li ng-repeat='item in ary'>{{$first?item+'——我是第一个':item}}</li>-->
+			<!--<li ng-repeat='item in ary'>{{$last?item+'——我是最后一个':item}}</li>-->
+			<!--<li ng-repeat='item in ary'>{{$middle?'——我是除了第一和最后以外的':item}}</li>-->
+		</ul>
+	</body>
+	<script>
+		var app = angular.module('app',[]);
+		app.controller('myCtrl',['$scope',function($scope){
+			$scope.ary = function(cnt){
+				var a = [];
+				for(var i=1; i<=cnt; i++){
+					a.push(i);
+				}
+				return a;
+			}(10);
+		}])
+	</script>
+</html>

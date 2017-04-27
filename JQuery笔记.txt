@@ -1,0 +1,339 @@
+JQ与JS代码可以共存，但在一个表达式中不能混写，JS中的原生对象只能调用原生的方法/属性，JQ对象只能调用JQ中的方法。
+
+defer   等HTML加载完的时候再加载JS
+
+链式写法 可以修改多个css样式
+
+text(赋值（文本）) 		获取纯文本    
+html（赋值（标签））	获取标签
+
+【伪类选择器】
+		eq 是 = 
+		gt 是 >
+		lt 是 <
+
+【属性选择器】
+		:header		匹配如h1、h2、h3之类的标题元素
+		:animated	匹配所有没有在执行动画效果中的元素
+		:firstchild		匹配第一个子元素
+		:lastchild		匹配最后一个子元素
+		:onlychild	匹配某个父元素中唯一的子元素
+
+	语法$(‘选择器[属性及其逻辑关系]’)
+
+		children		找他的子集
+		find  		查找
+		parent		找他的父集
+		parents		找他的祖先元素 没有条件 会一路查找至body。
+		parentsUntil 	找起点的父元素直到终点元素结束  没有条件  会一路查找至body。
+		siblings		找他的同级元素   但不包含本身
+		next		找他下一个元素
+		prev		找他上一个元素
+		nextAll		找他后面的所有元素
+		nextUntil 	找起点的同级元素直到终点元素结束  不包含起始和终点元素
+		prev prevAll prevUntil 方法与上面类似 只不过方向相反而已
+
+
+【表单选择器】
+	input 	匹配所有input、textarea、select、button表单元素
+	text	匹配所有单行文本框
+          password	匹配所有密码框
+	radio	匹配所有单选按钮
+          checkbox 	匹配所有复选框
+	submit	匹配所有提交按钮
+	image	匹配所有图像域
+	reset	匹配所有重置按钮
+	button	匹配所有按钮
+	file	匹配所有文件域
+	hidden	匹配所有不可见元素
+             enabled	匹配所有可用元素
+            disabled	匹配所有不可用元素
+            checked	匹配所有选中的复选框
+            selected	匹配所有选中的选项元素
+
+表单事件	onsubmit
+
+visible	显示（占空间）	hidden	隐藏（占空间）
+block	显示（占空间）	none	隐藏（不占空间）
+
+【过滤函数】
+	filter（）可以有多个条件，用逗号隔开，（逻辑“||”关系）
+	slice（）条件一个值是截取几个。  两个值为从第一个开始，到第二个结束（包含第一个，不包含第二个）。
+
+【删除函数】
+	not(条件)	除了条件之外的	它适用于反向逻辑
+	is(条件)	根据选择器、元素或对象来检测匹配元素条件，如果符合则返回true。
+
+click()点击事件
+dblclick()双击事件
+mouseleave()移出  = mouseover
+mouseenter()移入  = mouseout
+
+hover()移入移出事件
+
+toggle()	对被选元素进行隐藏和显示的切换
+
+bind()为对象元素绑定事件（可以同时绑定多个事件）
+
+unbind()解绑事件
+on()	可以多次触发函数
+one()	只能触发一次
+
+trigger()表示开关的意思 用来触发默认事件或自定义事件
+
+【获取属性】
+$(选择器).width()	不带px
+$(选择器).height()
+
+用css获取属性
+$(选择器).css(“属性”)	带px
+
+【获取元素值】
+text()获取和设置元素的纯文本
+html()获取和设置innerHTML属性
+val()获取匹配元素的当前值
+attr()获取匹配元素集合中第一个元素的属性的值	能获取也能设置	示例：$(“img”).attr(“src”);
+区别：html带标记，text不带标记
+
+【attr】
+attr() 方法设置或返回被选元素的属性和值。
+语法
+	返回属性的值：
+	$(selector).attr(attribute)
+	设置属性和值：
+	$(selector).attr(attribute,value)
+	使用函数设置属性和值：
+	$(selector).attr(attribute,function(index,currentvalue))
+	设置多个属性和值：
+	$(selector).attr({attribute:value, attribute:value,...})
+
+【prop】
+prop() 方法设置或返回被选元素的属性和值。
+语法
+	返回属性的值：
+	$(selector).prop(property)
+	设置属性和值：
+	$(selector).prop(property,value)
+	使用函数设置属性和值：
+	$(selector).prop(property,function(index,currentvalue))
+	设置多个属性和值：
+	$(selector).prop({property:value, property:value,...})
+
+【什么时候使用attr()，什么时候使用prop()？】
+	1.添加属性名称该属性就会生效应该使用prop();
+	2.是有true,false两个属性使用prop();
+	3.其他则使用attr();
+
+【内部插入】
+append()	添加到尾部
+$(选择器/对象).append(内容)
+$(要插入的内容且为JQ对象).appendTo(要选择的对象)
+他们的写法是相反的。
+
+prepend()	添加到头部
+
+append()、appendTo()、prepend()、prependTo()是相互联系，且操作紧密的四个方法，它们都能够实现内部插入，只是操作的方向和位置不同。
+
+remove(‘要删除的元素’)	删除被选元素及其子元素(标签也删除)
+empty(‘要删除的元素)	从被选元素中删除子元素(标签还在)
+createElement(“元素”)	创建元素
+
+clone()克隆对象	 还克隆html结构、样式和事件。
+
+【外部插入】
+$(被插入的选择器/对象).after(要插入的选择器/对象)
+$(被插入的选择器/对象).before(要插入的选择器/对象)
+$(要插入的选择器/对象/可以创建新的对象元素).insertAfter($(被插入的选择器/对象))
+$(要插入的选择器/对象/可以创建新的对象元素).insertBefore($(被插入的选择器/对象))
+
+warp(标签)	把匹配的元素用指定标签包裹起来
+
+【替换结构】
+	$('要替换的选择器/对象').replaceWith('替换成的选择器/对象')
+	$('被替换的选择器/对象').replaceAll('替换的选择器/对象')
+
+$(对象元素).addClass(“名字”)	给匹配对象元素添加class名
+$(对象元素).attr(“class”，“名字”)	给匹配对象元素添加class名
+
+removeAttr(“属性名”)	删除匹配属性的值
+removeClass(“class名”)	删除匹配的class属性	没有属性名则删除全部class属性
+
+.index()	获取JQ对象中指定元素的索引值，如果找到了从0开始返回，如果没有找到匹配的元素则返回-1。
+
+size()	能够返回匹配对象中元素的个数（后面要加括号）
+length	同上（后面不加括号）
+
+【添加css样式】	
+	addClass()	添加一个或多个样式，样式的效果累加在一起，当样式有冲突时按定义的先后优先级排列。
+	removeClass(“class名”)		删除一个或多个样式
+
+toggleClass(“class名”)	在原有样式和指定样式间切换(只能指定一个样式参数)。
+
+.css(“opacity”，“取值范围0~1”)	设置元素的透明度,实现渐入渐出效果。
+
+scrollTop()	垂直滚动距离
+scrollTo（水平方向，垂直方向）	让滚动条滚动到指定距离
+
+
+parent	获取父集
+offsetParent	获取有定位的父集
+
+$("父级盒子").delegate("当前要绑定事件的盒子","事件",function(){
+	//用于当前或未来的元素（比如由脚本创建的新元素）
+})
+
+hide("时间"，“回调函数”)	隐藏
+          ‘slow’		600毫秒
+        ‘normal’		400毫秒
+          ‘fast’		200毫秒
+
+show("时间"，“回调函数”)	显示
+
+【淡入淡出】
+fadeIn("时间"，“回调函数”)		淡入显示   调整不透明度
+fadeOut("时间"，“回调函数”)	淡出隐藏
+fadeToggle("时间"，“ linear”)	先淡出后淡入
+fadeTo("时间"，"不透明值")		渐变到不透明值
+
+【滑动显示隐藏】
+slideUp('时间','回调函数')	向上滑动隐藏
+slideDown('时间','回调函数')	向下滑动显示
+
+$('元素对象').toggle(时间,function(){
+	alert('回调函数');
+}) 	
+有hide和show属性	
+
+$('元素对象').slideToggle(时间,function(){
+	alert('回调函数');
+}) 	
+有slideUp和slideDown属性
+
+【自定义动画函数】
+animate('{属性:值}','时间','回调函数')
+
+stop()		停止当前的动画，后面的动画还会执行
+stop(true)		停止所有的动画
+stop(false，true)	执行第一个动画，然后执行后面的动画
+stop(true，true)	执行第一个动画。不再执行后面的动画
+
+【AJAX】
+避免网页乱码
+	1、页面编码
+	2、数据库一致
+	3、后台程序编码一致
+	4、文档新建先确定编码最后保存
+
+服务器操作四步骤
+	1、链接服务器	$con=mysql_connect('localhost','root','zsl');
+	2、链接数据库（只是一个文件夹而已）	$db=mysql_select_db('数据库名');
+	3、在操作数据库之前必须先确定操作的编码，否则就会乱码	mysql_query('set names utf8');
+	4、操作数据库（增、删、改、查）
+		$ins=mysql_query("insert into 表名(字段名,字段名) values('要插入的内容','要插入的内容')");
+		$del=mysql_query('delete from 表名 where 主键字段(id) ="0"');
+		$update=mysql_query('update 表名 set 字段名="字段内容",字段名="字段内容" where 主键字段(id)="4"');
+		$data=mysql_query('select * from 表名 where 主键字段(id)="2"');
+			if(mysql_fetch_array($data)){
+				echo '已有';
+			}else{
+				echo '没有';
+			}
+
+XMLHttpRequest对象的运行状态——用户
+	0 = 未初始化
+	1 = 读取中
+	2 = 已读取
+	3 = 交互中
+	4 = 完成
+
+	1、创建XMLHttpRequest对象	
+	xmlhttp = new XMLHttpRequest()；	兼容高版本浏览器
+	xmlhttp = new ActiveXObject('microsoft.XMLHTTP')；	兼容低版本浏览器
+	2、连接数据库	xmlhttp.open("GET或POST","文件.php?name=" + userName +"&t=" + Math.random(),true)
+	method参数用于指定用来发送请求http方法，把数据发到服务器用POST,从服务器检索数据用GET。
+	URL表示请求的服务器的地址
+	async表示是否采用异步方法，true为异步，false为同步。
+	现实生活中:  同步是多个事情一起做，异步是一件事一件事的做。
+	ajax中:	    同步是一件事一件事的做，异步是多个事情一起做。
+	3、发送请求	xmlhttp.send()
+	4、接收返回值	
+	if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+		document.getElementById('myDiv').innerHTML = xmlhttp.responseText;
+	}
+	
+	服务器返回的http状态码
+		 200 ok 请求文档或文件已经找到，并正确返回
+		 304 Not Modified 浏览器指出他拥有一个本地的缓存副本，而服务器端的内容与此相同
+		 401 Unauthorized 请求所需文档需要验证
+		 403 Forbidden 请求者对所请求的文档不具有相应权限
+		 404 Not Found 请求的文件找不到
+		 500 Internal Server Error 服务器在处理请求时遇到了问题
+		 503 Service Unavailable 服务器因负载过大而无法处理该请求
+
+在php中双引号能解析出变量，单引号不能。
+单引号和双引号的区别:
+	单引号将输出变量名称，而不是值：
+
+jquery对ajax的封装，最底层的是$.ajax()，第二层是$.post()、$.get()、和load()。第三层是$.getScript()和$.getJSON()。
+
+load()方法是简单但强大的ajax方法，从服务器加载数据，并把返回的数据放入到被选元素中。
+语法：$(被选元素).load(URL("文件.php?name=" + userName +"&t=" + Math.random(),true)
+
+type要求为string类型的参数，请求方式post或get，默认为get。
+data为发送到服务器的数据。
+success方法规定AJAX请求成功时执行函数，它是一个AJAX事件
+
+get 	提交数据的时候会暴露	优点：数据量小 传输速度快 处理效率高	缺点：不加密安全性低 2K
+post 	提交数据的时候会隐藏	优点：加密 安全性高		缺点：数据量大 传输速度慢  2M
+一般来说，尽量避免使用GET方式提交表单，因为有可能会导致安全问题。
+
+面向对象的几个概念：一切事物皆对象，对象具有封装和继承属性，对象和对象之间使用消息通信，各自存在信息隐藏。
+面向对象有三大特性。
+三大特性是：封装，继承，多态。
+封装就是把客观事物封装成抽象的类，并且类可以把自己的数据和方法只让可信的类或者对象操作，对不可信的进行信息隐藏。
+继承就是可以让某个类型的对象获得另一个类型的对象的属性的方法。
+多态就是指一个类实例的相同方法在不同情形有不同表现形式。多态机制是具有不同内部结构的对象可以共享相同的外部接口。
+
+【正则】
+	正则表达式描述了一种字符串匹配的模式，通过这个模式在特定的函数中对字符串进行匹配、查找、替换和分割等操作。
+	两种写法，一种是用new创建。var 变量名=new RegExp(字符串规则，字符串选项); 例如var z = new RegExp("box","ig");
+	一种是字面量。var reg=/规则/选项; 例如var z = /box/ig;
+
+	i	忽略大小写
+	g	全局分配（查找到一个条件后，继续往后面查询）
+	m	多行匹配
+	*	零次或多次
+	+	一次或多次
+	?	零次或一次（可有可无的意思）
+	^	在中括号里面是取反排除的意思，在大括号里面是以···开头的意思
+	$	以···结尾
+	()	模式单元,可以理解为由多个原子组成的大原子
+	[]	是原子表
+	{}	是限定符
+	{n}	正好n个
+	{n，}	最少n个，最多不限
+	{n，m}	最少n个，最多m个
+	.	能匹配任何一个字符
+	\w	英文字母、数字、下划线		[0-9a-zA-Z]
+	\W	除了字母、数字、下划线以外的	[^0-9a-zA-Z]
+	\d	匹配一个数字		[0-9]
+	\D	匹配除数字以外的		[^0-9]
+	\s	匹配一个空白字符		[\f\n\r\t\v]
+	\S	匹配除了空白字符以外的	[\f\n\r\t\v]
+	\f	匹配一个换页符
+	\n	匹配一个换行符
+	\r	匹配一个回车符
+	\t	匹配一个制表符
+	\v	匹配一个垂直制表符
+
+	match() 在字符串内检索指定的值，或找到一个或多个正则表达式的匹配
+	该方法类似 indexOf() 和 lastIndexOf()，但是它返回指定的值，而不是字符串的位置。
+	replace() 用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串	
+	search() 用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。如果没有找到任何匹配的子串，则返回 -1。
+	split() 方法用于把一个字符串分割成字符串数组。String.split() 执行的操作与 Array.join 执行的操作是相反的。
+	test() 检测一个字符串是否匹配某个模式，如果字符串中含有匹配的文本，则返回 true，否则返回 false		
+	exec() 检索字符串中的正则表达式的匹配。该函数返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null。
+
+	手机号正则验证：/^(1)[3|4|5|7|8](\d){9}$/
+	密码正则验证：/^[a-zA-Z]\w{5,18}$/
+
