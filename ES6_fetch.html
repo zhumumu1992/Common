@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script>
+		fetch('http://47.92.37.168:2403/hi', {
+				method: 'post',
+				headers: {
+					"Content-type": "application/x-www-form-urlencoded" //把提交的数据从字符串转成对象格式
+				},
+				body: 'hi=朱木木'
+			}).then(data => data.json())
+			.then(function(data) {
+				console.log('成功后，后台返回的数据是：', data);
+				console.log(data.hi);
+			})
+			.catch(function(error) {
+				console.log('失败后，后台返回的数据是', error);
+			});
+	</script>
+
+</html>

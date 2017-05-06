@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+/*			function Ab(a){
+				alert(this.id = a);
+			}
+			
+			function Bb(e){
+				alert(this.name = e);
+				Ab.call(this)
+			}
+			var c = new Bb(2)*/
+			
+			
+/*			function foo(){
+				var i = 1;
+				return function(){
+					console.log(i++)
+				}
+			}
+			var f1 = foo(),f2=foo()
+			f2()//1
+			f2()//2
+			f2()//3*/
+			
+			
+/*			var funame = "1";
+			var obj = {
+				funame:"2",
+				proed:{
+					funame:"3",
+					say:function(){
+						return this.funame
+					}
+				}
+			}
+			console.log(obj.proed.say())
+			var b = obj.proed.say
+			console.log(b())*/
+			//3	1
+			
+			/*张博相的面试题*/
+//			alert(1/0 === 1/-0)	//false
+//			alert(null == undefined)	//true
+//			alert([] == true)	//false
+//			alert(0 === -0)		//true
+//			alert((12,5,6,7,13))	//13
+//			alert("I'm a lasagna hog".split("").reverse().join(""));	//goh angasal a m'I
+			
+			
+/*			function show(a){
+				var b = a();
+				return b();
+			}
+			
+			var a = function(){
+				console.log("test");
+				return function(){
+					console.log("show");
+				}
+			}
+			console.log(show(a));*/
+			//test  show   undefined(函数没有返回值)
+
+
+/*			var a = function(){
+				console.log("test");
+			}
+			function show(a){
+				console.log(a);
+				return function(){
+					console.log(2);
+				}
+			}
+			console.log(show(a)())*/
+			//function(){console.log("test");}		2		undefined(函数没有返回值)
+			
+			
+/*			var json = {
+				a:1,
+				b:2,
+				c:function(){
+					console.log("test");
+					return 10;
+				}
+			};
+			var arr = [3,2,1];
+			function show(a){
+				console.log(a[0] + json.a + arguments[1].c());//test 14
+				return arguments[1].c()+arguments[0][0];//test 13
+			}
+			console.log(show(arr,json));*/
+			
+			
+			/*常瑞丽的面试题*/
+			/*//1.javascript有哪几种数据类型(不包括es6)
+				Number
+				String
+				Boolean
+				Null
+				Undefined
+				Object*/
+			/*//2.什么是闭包？
+			 	1.一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分
+			 	2.闭包就是能够读取其他函数内部变量的函数。由于在Javascript语言中，只有函数内部的子函数才能读取局部变量，因此可以把闭包简单理解成"定义在一个函数内部的函数"。所以，在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。
+			 	3.外层函数可以使用内层函数的子变量
+			 	     内层函数可以做为返回值返回
+			 	     函数嵌套
+			 	     实现跨作用域的变量使用
+			 	作用:内存释放，保护变量*/
+			
+			/*//3.javascript如何检测一个变量为array类型？
+			 	var a1 = [1,2,3];
+				var a2=new Array("a","b");
+				var a3={a:1};
+				function isArray(obj) { 
+				  return Object.prototype.toString.call(obj) === '[object Array]';   
+				}
+				alert(isArray(a3))
+			*/
+			
+			/*4.有一个ul元素，里面包含未知数量class=item的li元素，给所有包含class=item的li元素绑定一个点击事件，点击时候输出li标签脸面的内容(要求使用事件委托,可用jquery库简化代码)。
+			 
+			*/
+			
+			/*5.写一个javascript方法将字符串反转。例如abcdefg转化为gfedcba
+				var a  = "abcdefg"
+				alert(a.split("").reverse().join(""));
+			*/
+			/*//6.写一个javascript方法求出一个数组中(全部为Number类型)的最大值
+			 	var arr = [3,5,66,1,23];
+				function max(aa){
+					var max = arr[0];
+					for(var i = 0;i<aa.length;i++){
+						if(max < aa[i]){
+							max = aa[i];
+						}
+						console.log(max)
+					}
+					return max;
+				}
+				max(arr);
+				alert(max(arr));*/
+			
+			/*//7.将一个数组a=[1,2,3,2,3,4,5,2]里面的第五项用splice删除掉,并在此插入两个数组项66,77
+			 	var a = [1,2,3,2,3,4,5,2];
+				a.splice(4,1,66,77)
+				alert(a)*/
+			
+			
+			/*//8.将一个数组arr=[1,6,3,4,5,9,7,8,9,8,1,3,2]里面的小于5的项过滤出来组成一个新的数组.
+			 	var arr = [1,6,3,4,5,9,7,8,9,8,1,3,2];
+				var arr1 = [];
+				for(var i = 0;i<arr.length;i++){
+					if(arr[i]<=5){
+						arr1.push(arr[i])
+					}
+				}
+				alert(arr1)*/
+			
+			
+			/*9.写一个javascript方法,将数组进行升序排序。
+			 	var arr = [1,56,34,11,223];
+				alert(arr.sort(function(a,b){
+					return a - b;
+				}))
+			*/
+			
+			
+			/*10.写一个javascript方法，求出两个数组的并集。例如有a=[1,2,3,4,5,6],b=[3,4,5,6,7,8],并集为[1,2,3,4,5,6,7,8].
+			 	var a = [1,2,3,4,5,6];
+				var b = [3,4,5,6,7,8];
+				var c = a.concat(b);
+				//数组去重一
+				var arr = [];
+				for(var i = 0;i<c.length;i++){
+					if(arr.indexOf(c[i]) == -1){
+						arr.push(c[i]);
+					}
+				}
+				alert(arr);
+				//数组去重二
+				for(var i = 0;i<c.length;i++){
+					for(var j = i+1;j<c.length;j++){
+						if(c[i] == c[j]){
+							c.splice(j,1);
+						}
+					}
+				}
+				alert(c)
+			*/
+			
+
+			/*11.下面javascript代码输出什么
+			 	var a = 1;
+			 	function test(){
+			 		console.log(a); //undefined
+			 		a = 2;
+			 		console.log(a); //2
+			 		var a = 3
+			 	}
+			 	test();
+			 	console.log(a)		//1
+			  
+			*/
+			/*//12.下面javascript代码输出什么
+			 for(var i = 0;i<10;i++){
+			 	setTimeout(function(){
+			 		console.log(i) //执行了10次10
+			 	})
+			 }*/
+			 
+			
+			/*//13.下面javascript代码输出什么
+			 	setTimeout(function(){
+					console.log(1);
+				})
+				new Promise(function(resolve,rejcet){
+					console.log(2);
+					resolve(true)
+				}).then(function(){
+					console.log(3);
+				})
+				console.log(4)*/
+			
+			/*var a = function(){
+				var c = 1;
+				var b = function(){
+					console.log(c++)
+				}
+				return b
+			}
+			var d = a();
+			console.log(d())
+			//1	undefined*/
+			
+			/*var str="1.2.3.4";
+			var arr = str.split(".");
+			var str1 = "";
+			for(var i = arr.length - 1;i>=0;i--){
+				str1 = str1+arr[i]+".";
+				var str2=str1.substr(0,str1.length-1);
+			}
+			str = str.split(",").reverse().join(".");
+		    console.log(str)	//1.2.3.4
+		    console.log(str1)	//4.3.2.1.
+		    console.log(str2)	//4.3.2.1*/
+		    
+		</script>
+	</body>
+</html>
